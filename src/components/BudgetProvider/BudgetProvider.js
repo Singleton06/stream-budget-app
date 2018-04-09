@@ -4,23 +4,19 @@ export const BudgetContext = React.createContext();
 
 class BudgetProvider extends Component {
   state = {
-    budgets: [
-      {
-        name: "Test"
-      }
-    ]
+    budgets: [{ name: "Test" }, { name: "Food" }]
   };
 
   render() {
     return (
-      <BudgetContext.Provider value={
-        {
+      <BudgetContext.Provider
+        value={{
           budgets: this.state.budgets,
           doAction: () => {
-            console.log('do something here')
+            console.log("do something here");
           }
-        }
-      }>
+        }}
+      >
         {this.props.children}
       </BudgetContext.Provider>
     );
