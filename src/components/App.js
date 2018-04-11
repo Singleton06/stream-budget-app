@@ -1,27 +1,27 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "material-ui/styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 
 import { BudgetProvider } from './BudgetProvider';
-import BudgetAppBar from "./BudgetAppBar";
-import BudgetContainer from "./BudgetContainer";
-import Summary from "./Summary";
+import BudgetAppBar from './BudgetAppBar';
+import BudgetContainer from './BudgetContainer';
+import Summary from './Summary';
 
-const budgets = ["Food", "Housing", "Charity"];
+const budgets = ['Food', 'Housing', 'Charity'];
 
 const styles = {
   root: {
     flexGrow: 1
   },
   flexContainer: {
-    display: "flex",
-    alignItems: "stretch"
+    display: 'flex',
+    alignItems: 'stretch'
   },
   summarySection: {
-    flexGrow: "7"
+    flexGrow: '7'
   },
   categoriesSection: {
-    flexGrow: "3"
+    flexGrow: '3'
   }
 };
 
@@ -36,7 +36,7 @@ const App = props => {
             <BudgetContainer budgets={budgets} />
           </div>
           <div className={classes.summarySection}>
-            <Summary budgeted={100} spent={20} />
+            <Summary />
           </div>
         </div>
       </div>

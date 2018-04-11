@@ -1,12 +1,19 @@
 import React from "react";
+import { BudgetContext } from "../BudgetProvider";
 
-const Summary = ({ budgeted, spent }) => {
-  const remaining = budgeted - spent;
+const Summary = () => {
   return (
     <div>
-      <div>Budgetted: <span>{budgeted}</span></div>
-      <div>Spent: <span>{spent}</span></div>
-      <div>Remaining: <span>{remaining}</span></div> {/* probably style red/green for over/under and use () around */}
+      <h1>Summary</h1>
+      <BudgetContext.Consumer>
+        {consumer => {
+          return consumer.summaries.map(summary => (
+            <div>
+              {summary.name}:{summary.totalBudgeted}:{summary.totalSpent}
+            </div>
+          ));
+        }}
+      </BudgetContext.Consumer>
     </div>
   );
 };

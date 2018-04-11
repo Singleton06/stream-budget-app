@@ -1,10 +1,10 @@
 import ExpansionPanel, {
   ExpansionPanelSummary,
   ExpansionPanelDetails
-} from "material-ui/ExpansionPanel";
-import Typography from "material-ui/Typography";
-import React from "react";
-import PropTypes from "prop-types";
+} from 'material-ui/ExpansionPanel';
+import Typography from 'material-ui/Typography';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const BudgetCategory = props => {
   return (
@@ -23,7 +23,13 @@ const BudgetCategory = props => {
 };
 
 BudgetCategory.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  lineItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      amountBudgeted: PropTypes.number.isRequired,
+      amountSpent: PropTypes.number
+    })
+  )
 };
 
 export default BudgetCategory;
