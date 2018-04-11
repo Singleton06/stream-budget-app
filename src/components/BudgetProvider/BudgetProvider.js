@@ -4,40 +4,7 @@ export const BudgetContext = React.createContext();
 
 class BudgetProvider extends Component {
   state = {
-    budgets: [
-      {
-        name: "Food",
-        lineItems: [
-          {
-            name: "Grocery",
-            amountBudgeted: 100,
-            amountSpent: 50
-          },
-          {
-            name: "Eating Out",
-            amountBudgeted: 200,
-            amountSpent: 100
-          }
-        ]
-      },
-      {
-        name: "Transportation",
-        lineItems: [
-          {
-            name: "Fuel",
-            amountBudgeted: 300,
-            amountSpent: 150
-          },
-          {
-            name: "Repairs",
-            amountBudgeted: 400,
-            amountSpent: 200
-          }
-        ]
-      }
-    ],
-
-    budget2: {
+    budgets: {
       Food: {
         Groceries: { budgeted: 100, spent: 30 },
         "Dine Out": { budgeted: 100, spent: 50 }
@@ -51,15 +18,30 @@ class BudgetProvider extends Component {
 
   handleBudgetChange = (category, line) => {};
 
+  transformToArray = () => {
+    const { budgets } = this.state;
+    return Object.keys(budgets).map(key => {
+      return {
+        name: key,
+        lineItems: Object.keys(budgets[key]).map(lineKey => ({
+          name: lineKey,
+          budgeted: budgets[key][lineKey].budgeted,
+          spent: budgets[key][lineKey].spent
+        }))
+      };
+    });
+  };
+
   calculateSummaries = () => {
-    return this.state.budgets.map(budget => {
-      const totalBudgeted = budget.lineItems.reduce((a, line) => {
-        return (a += line.amountBudgeted);
+    const { budgets } = this.state;
+    return Object.keys(budgets).map(key => {
+      const totalBudgeted = Object.keys(budgets[key]).reduce((a, lineKey) => {
+        return (a += budgets[key][lineKey].budgeted);
       }, 0);
-      const totalSpent = budget.lineItems.reduce((a, line) => {
-        return (a += line.amountSpent);
+      const totalSpent = Object.keys(budgets[key]).reduce((a, lineKey) => {
+        return (a += budgets[key][lineKey].spent);
       }, 0);
-      return { name: budget.name, totalBudgeted, totalSpent };
+      return { name: key, totalBudgeted, totalSpent };
     });
   };
 
@@ -67,7 +49,7 @@ class BudgetProvider extends Component {
     return (
       <BudgetContext.Provider
         value={{
-          budgets: this.state.budgets,
+          budgets: this.transformToArray(),
           summaries: this.calculateSummaries()
         }}
       >
