@@ -1,10 +1,10 @@
-import React from "react";
-import { render } from "react-dom";
-import App from "./components/App";
+import React from 'react';
+import { render } from 'react-dom';
+import App from './components/App';
 
 const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center",
+  fontFamily: 'sans-serif',
+  textAlign: 'center',
   margin: 0
 };
 
@@ -14,4 +14,4 @@ const Root = () => (
   </div>
 );
 
-render(<Root />, document.getElementById("root"));
+render(<Root />, document.getElementById('root'));

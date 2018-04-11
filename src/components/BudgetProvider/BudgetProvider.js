@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export const BudgetContext = React.createContext();
 
 class BudgetProvider extends Component {
   state = {
-    budgets: [{ name: "Test" }, { name: "Food" }]
+    budgets: [{ name: 'Test' }, { name: 'Food' }, { name: 'Transportation' }]
   };
 
   render() {
@@ -13,7 +13,7 @@ class BudgetProvider extends Component {
         value={{
           budgets: this.state.budgets,
           doAction: () => {
-            console.log("do something here");
+            console.log('do something here');
           }
         }}
       >
