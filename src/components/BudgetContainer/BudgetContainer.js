@@ -7,7 +7,7 @@ const BudgetContainer = () => {
     <BudgetContext.Consumer>
       {consumer => {
         return consumer.budgets.map(budget => (
-          <BudgetCategory name={budget.name} budget={budget} />
+          <BudgetCategory name={budget.name} budgetLineItems={budget.budgetLineItems} />
         ));
       }}
     </BudgetContext.Consumer>

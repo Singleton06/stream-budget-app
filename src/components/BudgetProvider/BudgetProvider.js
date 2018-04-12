@@ -1,19 +1,44 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import Budget from '../../models/Budget';
+import BudgetLineItem from '../../models/BudgetLineItem';
 
 export const BudgetContext = React.createContext();
+const budgets = [
+  new Budget({
+    name: 'Food',
+    budgetLineItems: [
+      new BudgetLineItem({
+        name: 'Grocery',
+        amountBudgeted: 150,
+        amountSpent: 100
+      }),
+      new BudgetLineItem({
+        name: 'Eating Out',
+        amountBudgeted: 250,
+        amountSpent: 175
+      })
+    ]
+  }),
+  new Budget({
+    name: 'Transportation',
+    budgetLineItems: [
+      new BudgetLineItem({
+        name: 'Fuel',
+        amountBudgeted: 600,
+        amountSpent: 550
+      }),
+      new BudgetLineItem({
+        name: 'Repair',
+        amountBudgeted: 50,
+        amountSpent: 100
+      })
+    ]
+  })
+];
 
 class BudgetProvider extends Component {
   state = {
-    budgets: {
-      Food: {
-        Groceries: { budgeted: 100, spent: 30 },
-        "Dine Out": { budgeted: 100, spent: 50 }
-      },
-      Transportation: {
-        Fuel: { budgeted: 300, spent: 150 },
-        Repairs: { budgeted: 400, spent: 500 }
-      }
-    }
+    budgets: budgets
   };
 
   handleBudgetChange = (category, line) => {};
@@ -49,7 +74,7 @@ class BudgetProvider extends Component {
     return (
       <BudgetContext.Provider
         value={{
-          budgets: this.transformToArray(),
+          budgets: budgets,
           summaries: this.calculateSummaries()
         }}
       >
