@@ -1,5 +1,5 @@
-import React from "react";
-import { BudgetContext } from "../BudgetProvider";
+import React from 'react';
+import { BudgetContext } from '../BudgetProvider';
 
 const Summary = () => {
   return (
@@ -7,7 +7,7 @@ const Summary = () => {
       <h1>Summary</h1>
       <BudgetContext.Consumer>
         {consumer => {
-          return consumer.summaries.map(summary => (
+          return consumer.getSummary.map(summary => (
             <div>
               {summary.name}:{summary.totalBudgeted}:{summary.totalSpent}
             </div>

@@ -6,16 +6,11 @@ import Typography from 'material-ui/Typography';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Table, {
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow
-} from 'material-ui/Table';
-import BudgetCategoryHead from './Table/BudgetCategoryHead';
+import Table, { TableBody } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
-import BudgetListItemRow from './Table/BudgetListItemRow';
+import BudgetCategoryHead from './Table/BudgetCategoryHead';
+import BudgetLineItemRow from './Table/BudgetLineItemRow';
 import BudgetLineItem from '../../models/BudgetLineItem';
 
 const styles = theme => ({
@@ -47,8 +42,10 @@ const BudgetCategory = props => {
           <Table className={classes.table}>
             <BudgetCategoryHead names={headings} />
             <TableBody>
-              {props.budgetLineItems.map(lineItemName => {
-                return <BudgetListItemRow name={lineItemName} />;
+              {props.budgetLineItems.map(lineItem => {
+                return (
+                  <BudgetLineItemRow key={lineItem.name} content={lineItem} />
+                );
               })}
             </TableBody>
           </Table>

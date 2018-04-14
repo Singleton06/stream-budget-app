@@ -3,49 +3,48 @@ import TextField from 'material-ui/TextField';
 import { TableRow, TableCell } from 'material-ui/Table';
 import PropTypes from 'prop-types';
 
-const BudgetListItemRow = props => {
+const BudgetItemTableRow = props => {
   return (
     <TableRow>
-      <TableCell padding="dense">{props.name}</TableCell>
+      <TableCell padding="dense">{props.content.name}</TableCell>
       <TableCell numeric padding="dense">
         <TextField
           id="name"
-          value="value"
           onChange=""
           margin="normal"
           fullWidth="true"
-          value={props.amountBudgeted}
+          value={props.content.amountBudgeted}
         />
       </TableCell>
       <TableCell numeric padding="dense">
         <TextField
           id="name"
-          value="value"
           onChange=""
           margin="normal"
           fullWidth="true"
-          value={props.amountSpent}
+          value={props.content.amountSpent}
         />
       </TableCell>
       <TableCell numeric padding="dense">
         <TextField
           id="name"
-          value="value"
           onChange=""
           margin="normal"
           fullWidth="true"
-          value={props.amountRemaining}
+          value={props.content.amountRemaining}
         />
       </TableCell>
     </TableRow>
   );
 };
 
-BudgetListItemRow.propTypes = {
-  name: PropTypes.string,
-  amountBudgeted: PropTypes.number,
-  amountSpent: PropTypes.number,
-  amountRemaining: PropTypes.number
+BudgetItemTableRow.propTypes = {
+  content: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    amountBudgeted: PropTypes.number,
+    amountSpent: PropTypes.number,
+    amountRemaining: PropTypes.number
+  })
 };
 
-export default BudgetListItemRow;
+export default BudgetItemTableRow;
