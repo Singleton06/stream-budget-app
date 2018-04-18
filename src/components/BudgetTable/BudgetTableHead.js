@@ -9,7 +9,7 @@ const styles = theme => ({
   }
 });
 
-const BudgetCategoryHead = props => {
+const BudgetTableHead = props => {
   const { classes } = props;
   return (
     <TableHead>
@@ -30,8 +30,8 @@ const BudgetCategoryHead = props => {
   );
 };
 
-BudgetCategoryHead.propTypes = {
+BudgetTableHead.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string)
 };
 
-export default withStyles(styles)(BudgetCategoryHead);
+export default withStyles(styles)(BudgetTableHead);

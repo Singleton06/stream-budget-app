@@ -9,33 +9,46 @@ const BudgetItemTableRow = props => {
       <TableCell padding="dense">{props.content.name}</TableCell>
       <TableCell numeric padding="dense">
         <TextField
-          id="name"
-          onChange=""
+          id="amountBudgeted"
+          onChange={() => {}}
           margin="normal"
-          fullWidth="true"
+          fullWidth={true}
           value={props.content.amountBudgeted}
+          disabled={props.disableInputFields}
         />
       </TableCell>
       <TableCell numeric padding="dense">
         <TextField
-          id="name"
-          onChange=""
+          id="amountSpent"
+          onChange={() => {}}
           margin="normal"
-          fullWidth="true"
+          fullWidth={true}
           value={props.content.amountSpent}
+          disabled={props.disableInputFields}
         />
       </TableCell>
       <TableCell numeric padding="dense">
         <TextField
-          id="name"
-          onChange=""
+          id="amountRemaining"
+          onChange={() => {}}
           margin="normal"
-          fullWidth="true"
+          fullWidth={true}
           value={props.content.amountRemaining}
+          disabled={props.disableInputFields}
         />
       </TableCell>
     </TableRow>
   );
+};
+
+BudgetItemTableRow.defaultProps = {
+  content: {
+    name: '',
+    amountBudgeted: 0,
+    amountSpent: 0,
+    amountRemaining: 0
+  },
+  disableInputFields: false
 };
 
 BudgetItemTableRow.propTypes = {
@@ -44,6 +57,12 @@ BudgetItemTableRow.propTypes = {
     amountBudgeted: PropTypes.number,
     amountSpent: PropTypes.number,
     amountRemaining: PropTypes.number
+  }),
+  disableInputFields: PropTypes.bool,
+  onChangeCallbacks: PropTypes.shape({
+    onNameChange: PropTypes.func,
+    onAmountBudgetedChanged: PropTypes.func,
+    onAmountSpentChanged: PropTypes.func
   })
 };
 

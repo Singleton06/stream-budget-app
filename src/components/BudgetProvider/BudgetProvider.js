@@ -12,7 +12,30 @@ class BudgetProvider extends Component {
     budgets
   };
 
-  handleBudgetChange = (category, line) => {};
+  updateBudget(budgetName, lineItemName, propertyToUpdate, propertyNewValue) {
+    const { budgets } = this.state;
+    const copiedBudgets = budgets.map(budget => budget.copy());
+    const matchingBudget = copiedBudgets.find(
+      budget => budget.name === budgetName
+    );
+    const budgetLineItem = matchingBudget.budgetLineItems.find(
+      lineItem => lineItem.name === lineItemName
+    );
+
+    const budgetLineItemIndex = matchingBudget.budgetLineItems.indexOf(
+      budgetLineItem
+    );
+
+    matchingBudget.budgetLineItems[budgetLineItemIndex] = new BudgetLineItem({
+      ...budgetLineItem,
+      [propertyToUpdate]: propertyNewValue
+    });
+
+    budgetLineItem[propertyToUpdate] = propertyNewValue;
+    this.setState({
+      budgets: copiedBudgets
+    });
+  }
 
   calculateSummaries = () => {
     const { budgets } = this.state;
@@ -20,14 +43,18 @@ class BudgetProvider extends Component {
       const summaryStructure = singleBudget.budgetLineItems.reduce(
         (accumulator, currentValue) => {
           return {
-            budgeted: accumulator.budgeted + currentValue.budgeted,
-            spent: accumulator.budgeted + currentValue.budgeted
+            budgeted: accumulator.budgeted + currentValue.amountBudgeted,
+            spent: accumulator.spent + currentValue.amountSpent
           };
         },
         { budgeted: 0, spent: 0 }
       );
 
-      return new Summary({ ...summaryStructure, name: singleBudget.name });
+      return new Summary({
+        name: singleBudget.name,
+        amountBudgeted: summaryStructure.budgeted,
+        amountSpent: summaryStructure.spent
+      });
     });
   };
 
@@ -36,7 +63,8 @@ class BudgetProvider extends Component {
       <BudgetContext.Provider
         value={{
           budgets: budgets,
-          getSummary: this.calculateSummaries()
+          getSummary: this.calculateSummaries,
+          updateBudget: this.updateBudget
         }}
       >
         {this.props.children}

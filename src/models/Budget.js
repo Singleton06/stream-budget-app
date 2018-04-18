@@ -11,6 +11,13 @@ class Budget {
     this.name = name;
     this.budgetLineItems = budgetLineItems;
   }
+
+  copy() {
+    return new Budget({
+      name: this.name,
+      budgetLineItems: this.budgetLineItems.map(item => item.copy())
+    });
+  }
 }
 
 export default Budget;

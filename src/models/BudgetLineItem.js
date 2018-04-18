@@ -17,6 +17,15 @@ class BudgetLineItem {
     this.amountSpent = amountSpent;
     this.amountRemaining = this.amountBudgeted - this.amountSpent;
   }
+
+  copy() {
+    return new BudgetLineItem({
+      name: this.name,
+      amountBudgeted: this.amountBudgeted,
+      amountSpent: this.amountSpent,
+      amountRemaining: this.amountRemaining
+    });
+  }
 }
 
 export default BudgetLineItem;

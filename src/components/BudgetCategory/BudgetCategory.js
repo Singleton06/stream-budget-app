@@ -7,10 +7,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody } from 'material-ui/Table';
-import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
-import BudgetCategoryHead from './Table/BudgetCategoryHead';
-import BudgetLineItemRow from './Table/BudgetLineItemRow';
+import { BudgetTableHead, BudgetItemTableRow } from '../BudgetTable';
 import BudgetLineItem from '../../models/BudgetLineItem';
 
 const styles = theme => ({
@@ -18,9 +16,6 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto'
-  },
-  tableHeading: {
-    textAlign: 'left'
   },
   table: {
     minWidth: 700
@@ -40,11 +35,11 @@ const BudgetCategory = props => {
       <ExpansionPanelDetails>
         <Paper className={classes.root}>
           <Table className={classes.table}>
-            <BudgetCategoryHead names={headings} />
+            <BudgetTableHead names={headings} />
             <TableBody>
               {props.budgetLineItems.map(lineItem => {
                 return (
-                  <BudgetLineItemRow key={lineItem.name} content={lineItem} />
+                  <BudgetItemTableRow key={lineItem.name} content={lineItem} />
                 );
               })}
             </TableBody>
@@ -57,7 +52,7 @@ const BudgetCategory = props => {
 
 BudgetCategory.propTypes = {
   name: PropTypes.string.isRequired,
-  budgetLineItems: PropTypes.arrayOf(BudgetLineItem)
+  budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem))
 };
 
 export default withStyles(styles)(BudgetCategory);

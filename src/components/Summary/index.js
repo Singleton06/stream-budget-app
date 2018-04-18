@@ -1,2 +1,2 @@
-import Summary from "./Summary";
-export default Summary;
+import SummaryComponent from './SummaryComponent';
+export default SummaryComponent;

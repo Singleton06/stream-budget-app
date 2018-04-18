@@ -1,4 +1,4 @@
-import BudgetCategoryHead from './BudgetCategoryHead';
+import BudgetTableHead from './BudgetTableHead';
 import BudgetItemTableRow from './BudgetItemTableRow';
 
-export { BudgetCategoryHead, BudgetItemTableRow };
+export { BudgetTableHead, BudgetItemTableRow };

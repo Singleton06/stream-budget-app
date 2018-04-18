@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import { BudgetProvider } from './BudgetProvider';
 import BudgetAppBar from './BudgetAppBar';
 import BudgetContainer from './BudgetContainer';
-import Summary from './Summary';
+import SummaryComponent from './Summary';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -36,7 +36,7 @@ const App = props => {
             <BudgetContainer budgets={budgets} />
           </div>
           <div className={classes.summarySection}>
-            <Summary />
+            <SummaryComponent />
           </div>
         </div>
       </div>

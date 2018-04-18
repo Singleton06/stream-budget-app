@@ -1,21 +1,34 @@
 import React from 'react';
-import { BudgetContext } from '../BudgetProvider';
+import Paper from 'material-ui/Paper';
+import Table, { TableBody } from 'material-ui/Table';
+import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
+import SummaryTableBody from './SummaryTableBody';
 
-const Summary = () => {
+import { BudgetTableHead, BudgetItemTableRow } from '../BudgetTable';
+
+const styles = theme => ({
+  root: {
+    overflowX: 'auto'
+  }
+});
+
+const headings = ['Name', 'Amount Budgeted', 'Amount Spent', 'Amount Balance'];
+
+const SummaryComponent = props => {
+  const { classes } = props;
+
   return (
-    <div>
-      <h1>Summary</h1>
-      <BudgetContext.Consumer>
-        {consumer => {
-          return consumer.getSummary.map(summary => (
-            <div>
-              {summary.name}:{summary.totalBudgeted}:{summary.totalSpent}
-            </div>
-          ));
-        }}
-      </BudgetContext.Consumer>
-    </div>
+    <Paper className={classes.root}>
+      <Typography variant="display1" gutterBottom>
+        Summary
+      </Typography>
+      <Table>
+        <BudgetTableHead names={headings} />
+        <SummaryTableBody />
+      </Table>
+    </Paper>
   );
 };
-
-export default Summary;
+//
+export default withStyles(styles)(SummaryComponent);
