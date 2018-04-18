@@ -24,9 +24,38 @@ const styles = theme => ({
 
 const headings = ['Name', 'Amount Budgeted', 'Amount Spent', 'Amount Balance'];
 
+const createCallbackForLineItemProperty = (
+  budgetName,
+  lineItemName,
+  propertyToUpdate,
+  updateBudgetCallback
+) => {
+  if (!updateBudgetCallback) {
+    return () => {};
+  }
+
+  return newPropertyValue => {
+    console.log(
+      'budgetName: ',
+      budgetName,
+      ' lineItemName: ',
+      lineItemName,
+      ' propertyToUpdate: ',
+      propertyToUpdate,
+      ' newPropertyValue:',
+      newPropertyValue.target.value
+    );
+    updateBudgetCallback(
+      budgetName,
+      lineItemName,
+      propertyToUpdate,
+      newPropertyValue.target.value
+    );
+  };
+};
+
 const BudgetCategory = props => {
   const { classes } = props;
-
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary>
@@ -39,7 +68,30 @@ const BudgetCategory = props => {
             <TableBody>
               {props.budgetLineItems.map(lineItem => {
                 return (
-                  <BudgetItemTableRow key={lineItem.name} content={lineItem} />
+                  <BudgetItemTableRow
+                    key={lineItem.name}
+                    content={lineItem}
+                    onChangeCallbacks={{
+                      onNameChange: createCallbackForLineItemProperty(
+                        props.name,
+                        lineItem.name,
+                        'name',
+                        props.onBudgetUpdate
+                      ),
+                      onAmountBudgetedChanged: createCallbackForLineItemProperty(
+                        props.name,
+                        lineItem.name,
+                        'amountBudgeted',
+                        props.onBudgetUpdate
+                      ),
+                      onAmountSpentChanged: createCallbackForLineItemProperty(
+                        props.name,
+                        lineItem.name,
+                        'amountSpent',
+                        props.onBudgetUpdate
+                      )
+                    }}
+                  />
                 );
               })}
             </TableBody>
@@ -49,10 +101,11 @@ const BudgetCategory = props => {
     </ExpansionPanel>
   );
 };
-
+// TODO: add default props
 BudgetCategory.propTypes = {
   name: PropTypes.string.isRequired,
-  budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem))
+  budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem)),
+  onBudgetUpdate: PropTypes.func
 };
 
 export default withStyles(styles)(BudgetCategory);

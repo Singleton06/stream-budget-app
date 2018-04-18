@@ -12,6 +12,7 @@ const BudgetContainer = () => {
               key={budget.name}
               name={budget.name}
               budgetLineItems={budget.budgetLineItems}
+              onBudgetUpdate={consumer.updateBudget}
             />
           );
         });

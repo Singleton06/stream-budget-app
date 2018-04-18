@@ -6,11 +6,12 @@ import PropTypes from 'prop-types';
 const BudgetItemTableRow = props => {
   return (
     <TableRow>
+      {/* TODO: add change listener for the name */}
       <TableCell padding="dense">{props.content.name}</TableCell>
       <TableCell numeric padding="dense">
         <TextField
           id="amountBudgeted"
-          onChange={() => {}}
+          onChange={props.onChangeCallbacks.onAmountBudgetedChanged}
           margin="normal"
           fullWidth={true}
           value={props.content.amountBudgeted}
@@ -20,7 +21,7 @@ const BudgetItemTableRow = props => {
       <TableCell numeric padding="dense">
         <TextField
           id="amountSpent"
-          onChange={() => {}}
+          onChange={props.onChangeCallbacks.onAmountSpentChanged}
           margin="normal"
           fullWidth={true}
           value={props.content.amountSpent}
@@ -48,7 +49,12 @@ BudgetItemTableRow.defaultProps = {
     amountSpent: 0,
     amountRemaining: 0
   },
-  disableInputFields: false
+  disableInputFields: false,
+  onChangeCallbacks: {
+    onNameChange: () => {},
+    onAmountBudgetedChanged: () => {},
+    onAmountSpentChanged: () => {}
+  }
 };
 
 BudgetItemTableRow.propTypes = {
