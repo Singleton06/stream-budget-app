@@ -4,6 +4,7 @@ import { TableRow, TableCell } from 'material-ui/Table';
 import PropTypes from 'prop-types';
 
 const BudgetItemTableRow = props => {
+  console.log(props);
   return (
     <TableRow>
       {/* TODO: add change listener for the name */}
@@ -15,7 +16,7 @@ const BudgetItemTableRow = props => {
           margin="normal"
           fullWidth={true}
           value={props.content.amountBudgeted}
-          disabled={props.disableInputFields}
+          disabled={props.disableAllInputFields || props.disableAmountBudgeted}
         />
       </TableCell>
       <TableCell numeric padding="dense">
@@ -25,7 +26,7 @@ const BudgetItemTableRow = props => {
           margin="normal"
           fullWidth={true}
           value={props.content.amountSpent}
-          disabled={props.disableInputFields}
+          disabled={props.disableAllInputFields || props.disableAmountSpent}
         />
       </TableCell>
       <TableCell numeric padding="dense">
@@ -35,7 +36,7 @@ const BudgetItemTableRow = props => {
           margin="normal"
           fullWidth={true}
           value={props.content.amountRemaining}
-          disabled={props.disableInputFields}
+          disabled={props.disableAllInputFields || props.disableAmountRemaining}
         />
       </TableCell>
     </TableRow>
@@ -49,7 +50,10 @@ BudgetItemTableRow.defaultProps = {
     amountSpent: 0,
     amountRemaining: 0
   },
-  disableInputFields: false,
+  disableAllInputFields: false,
+  disableAmountBudgeted: false,
+  disableAmountSpent: false,
+  disableAmountRemaining: false,
   onChangeCallbacks: {
     onNameChange: () => {},
     onAmountBudgetedChanged: () => {},
@@ -64,7 +68,10 @@ BudgetItemTableRow.propTypes = {
     amountSpent: PropTypes.number,
     amountRemaining: PropTypes.number
   }),
-  disableInputFields: PropTypes.bool,
+  disableAllInputFields: PropTypes.bool,
+  disableAmountBudgeted: PropTypes.bool,
+  disableAmountSpent: PropTypes.bool,
+  disableAmountRemaining: PropTypes.bool,
   onChangeCallbacks: PropTypes.shape({
     onNameChange: PropTypes.func,
     onAmountBudgetedChanged: PropTypes.func,

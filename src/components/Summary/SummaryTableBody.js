@@ -16,7 +16,7 @@ const SummaryTableBody = () => {
                 <BudgetItemTableRow
                   key={summary.name}
                   content={summary}
-                  disableInputFields={true}
+                  disableAllInputFields={true}
                 />
               ))}
           </TableBody>

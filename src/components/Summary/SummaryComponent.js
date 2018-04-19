@@ -13,7 +13,12 @@ const styles = theme => ({
   }
 });
 
-const headings = ['Name', 'Amount Budgeted', 'Amount Spent', 'Amount Balance'];
+const headings = [
+  'Name',
+  'Amount Budgeted',
+  'Amount Spent',
+  'Amount Remaining'
+];
 
 const SummaryComponent = props => {
   const { classes } = props;

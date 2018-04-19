@@ -22,7 +22,12 @@ const styles = theme => ({
   }
 });
 
-const headings = ['Name', 'Amount Budgeted', 'Amount Spent', 'Amount Balance'];
+const headings = [
+  'Name',
+  'Amount Budgeted',
+  'Amount Spent',
+  'Amount Remaining'
+];
 
 const createCallbackForLineItemProperty = (
   budgetName,
@@ -49,7 +54,7 @@ const createCallbackForLineItemProperty = (
       budgetName,
       lineItemName,
       propertyToUpdate,
-      newPropertyValue.target.value
+      Number(newPropertyValue.target.value)
     );
   };
 };
@@ -71,6 +76,7 @@ const BudgetCategory = props => {
                   <BudgetItemTableRow
                     key={lineItem.name}
                     content={lineItem}
+                    disableAmountRemaining={true}
                     onChangeCallbacks={{
                       onNameChange: createCallbackForLineItemProperty(
                         props.name,

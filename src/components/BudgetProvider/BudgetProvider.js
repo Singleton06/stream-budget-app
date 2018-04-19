@@ -16,23 +16,36 @@ class BudgetProvider extends React.Component {
 
     this.updateBudget = this.updateBudget.bind(this);
     this.calculateSummaries = this.calculateSummaries.bind(this);
+    this.copyBudgetsFromState = this.copyBudgetsFromState.bind(this);
+    this.getMatchingLineItemFromBudgets = this.getMatchingLineItemFromBudgets.bind(
+      this
+    );
+    this.editLineItemName = this.editLineItemName.bind(this);
+  }
+
+  copyBudgetsFromState() {
+    const { budgets } = this.state;
+    return budgets.map(budget => budget.copy());
+  }
+
+  getMatchingLineItemFromBudgets(budgets, budgetName, lineItemName) {
+    const matchingBudget = budgets.find(budget => budget.name === budgetName);
+    return matchingBudget.budgetLineItems.find(
+      lineItem => lineItem.name === lineItemName
+    );
+  }
+
+  editLineItemName(budgetName, oldLineItemName, newLineItemName) {
+    const copiedBudgets = this.copyBudgetsFromState();
+    const matchedBudgetLineItem = this.getMatchingLineItemFromBudgets(
+      copiedBudgets,
+      budgetName,
+      oldLineItemName
+    );
   }
 
   updateBudget(budgetName, lineItemName, propertyToUpdate, propertyNewValue) {
-    console.log(
-      'updateBudgetCalled with: ',
-      'budgetName: ',
-      budgetName,
-      'lineItemName: ',
-      lineItemName,
-      'propertyToUpdate: ',
-      propertyToUpdate,
-      'propertyNewValue: ',
-      propertyNewValue
-    );
-
-    const { budgets } = this.state;
-    const copiedBudgets = budgets.map(budget => budget.copy());
+    const copiedBudgets = this.copyBudgetsFromState();
     const matchingBudget = copiedBudgets.find(
       budget => budget.name === budgetName
     );
@@ -82,7 +95,7 @@ class BudgetProvider extends React.Component {
     return (
       <BudgetContext.Provider
         value={{
-          budgets: budgets,
+          budgets: this.state.budgets,
           getSummary: this.calculateSummaries,
           updateBudget: this.updateBudget
         }}
