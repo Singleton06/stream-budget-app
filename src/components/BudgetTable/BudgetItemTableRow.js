@@ -4,11 +4,19 @@ import { TableRow, TableCell } from 'material-ui/Table';
 import PropTypes from 'prop-types';
 
 const BudgetItemTableRow = props => {
-  console.log(props);
   return (
     <TableRow>
       {/* TODO: add change listener for the name */}
-      <TableCell padding="dense">{props.content.name}</TableCell>
+      <TableCell padding="dense">
+        <TextField
+          id="name"
+          onChange={props.onChangeCallbacks.onNameChange}
+          margin="normal"
+          fullWidth={true}
+          value={props.content.name}
+          disabled={props.disableAllInputFields || props.disableAmountBudgeted}
+        />
+      </TableCell>
       <TableCell numeric padding="dense">
         <TextField
           id="amountBudgeted"

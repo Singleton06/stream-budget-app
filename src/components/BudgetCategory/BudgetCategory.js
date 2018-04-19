@@ -33,29 +33,19 @@ const createCallbackForLineItemProperty = (
   budgetName,
   lineItemName,
   propertyToUpdate,
-  updateBudgetCallback
+  updateBudgetCallback,
+  isNumberValue = true
 ) => {
   if (!updateBudgetCallback) {
     return () => {};
   }
 
   return newPropertyValue => {
-    console.log(
-      'budgetName: ',
-      budgetName,
-      ' lineItemName: ',
-      lineItemName,
-      ' propertyToUpdate: ',
-      propertyToUpdate,
-      ' newPropertyValue:',
-      newPropertyValue.target.value
-    );
-    updateBudgetCallback(
-      budgetName,
-      lineItemName,
-      propertyToUpdate,
-      Number(newPropertyValue.target.value)
-    );
+    const newValue = isNumberValue
+      ? Number(newPropertyValue.target.value)
+      : newPropertyValue.target.value;
+
+    updateBudgetCallback(budgetName, lineItemName, propertyToUpdate, newValue);
   };
 };
 
@@ -74,7 +64,7 @@ const BudgetCategory = props => {
               {props.budgetLineItems.map(lineItem => {
                 return (
                   <BudgetItemTableRow
-                    key={lineItem.name}
+                    key={lineItem.uuid}
                     content={lineItem}
                     disableAmountRemaining={true}
                     onChangeCallbacks={{
@@ -82,7 +72,8 @@ const BudgetCategory = props => {
                         props.name,
                         lineItem.name,
                         'name',
-                        props.onBudgetUpdate
+                        props.onBudgetUpdate,
+                        false
                       ),
                       onAmountBudgetedChanged: createCallbackForLineItemProperty(
                         props.name,

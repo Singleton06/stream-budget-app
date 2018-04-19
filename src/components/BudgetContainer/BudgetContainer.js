@@ -9,7 +9,7 @@ const BudgetContainer = () => {
         return consumer.budgets.map(budget => {
           return (
             <BudgetCategory
-              key={budget.name}
+              key={budget.uuid}
               name={budget.name}
               budgetLineItems={budget.budgetLineItems}
               onBudgetUpdate={consumer.updateBudget}
