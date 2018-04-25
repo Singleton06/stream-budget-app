@@ -1,53 +1,59 @@
 import React from 'react';
-import Budget from '../../models/Budget';
 import BudgetLineItem from '../../models/BudgetLineItem';
+import Budget from '../../models/Budget';
 import Summary from '../../models/Summary';
+import uuid from 'uuid/v4';
 
 import budgets from './mock-data.js';
 
 export const BudgetContext = React.createContext();
 
 class BudgetProvider extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      budgets
-    };
+  state = {
+    budgets
+  };
 
-    this.updateBudget = this.updateBudget.bind(this);
-    this.calculateSummaries = this.calculateSummaries.bind(this);
-    this.copyBudgetsFromState = this.copyBudgetsFromState.bind(this);
-  }
+  addNewBudgetCategory = budgetName => {
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      copiedBudgets.push(
+        new Budget({
+          name: budgetName,
+          uuid: uuid(),
+          budgetLineItems: []
+        })
+      );
 
-  copyBudgetsFromState() {
-    const { budgets } = this.state;
+      return {
+        budgets: copiedBudgets
+      };
+    });
+  };
+
+  copyBudgetsFromState = previousState => {
+    const { budgets } = previousState;
     return budgets.map(budget => budget.copy());
-  }
+  };
 
-  updateBudget(budgetName, lineItemName, propertyToUpdate, propertyNewValue) {
-    const copiedBudgets = this.copyBudgetsFromState();
-    const matchingBudget = copiedBudgets.find(
-      budget => budget.name === budgetName
-    );
-    const budgetLineItem = matchingBudget.budgetLineItems.find(
-      lineItem => lineItem.name === lineItemName
-    );
+  updateBudget = (budgetName, lineItemName, propertyToUpdate, propertyNewValue) => {
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      const matchingBudget = copiedBudgets.find(budget => budget.name === budgetName);
+      const budgetLineItem = matchingBudget.budgetLineItems.find(lineItem => lineItem.name === lineItemName);
 
-    const budgetLineItemIndex = matchingBudget.budgetLineItems.indexOf(
-      budgetLineItem
-    );
+      const budgetLineItemIndex = matchingBudget.budgetLineItems.indexOf(budgetLineItem);
 
-    matchingBudget.budgetLineItems[budgetLineItemIndex] = new BudgetLineItem({
-      ...budgetLineItem,
-      [propertyToUpdate]: propertyNewValue
+      matchingBudget.budgetLineItems[budgetLineItemIndex] = new BudgetLineItem({
+        ...budgetLineItem,
+        [propertyToUpdate]: propertyNewValue
+      });
+
+      budgetLineItem[propertyToUpdate] = propertyNewValue;
+      return {
+        budgets: copiedBudgets
+      };
     });
-
-    budgetLineItem[propertyToUpdate] = propertyNewValue;
-
-    this.setState({
-      budgets: copiedBudgets
-    });
-  }
+  };
 
   calculateSummaries = () => {
     const { budgets } = this.state;

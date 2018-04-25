@@ -6,6 +6,7 @@ import { BudgetProvider } from './BudgetProvider';
 import BudgetAppBar from './BudgetAppBar';
 import BudgetContainer from './BudgetContainer';
 import SummaryComponent from './Summary';
+import AddBudgetDialog from './AddBudgetDialog';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -25,24 +26,45 @@ const styles = {
   }
 };
 
-const App = props => {
-  const { classes } = props;
-  return (
-    <BudgetProvider>
-      <div className={classes.root}>
-        <BudgetAppBar title="Budget Application" />
-        <div className={classes.flexContainer}>
-          <div className={classes.categoriesSection}>
-            <BudgetContainer budgets={budgets} />
+class App extends React.Component {
+  state = {
+    addBudgetDialogOpen: false
+  };
+
+  toggleAddBudgetDialogState = () => {
+    this.setState(prevState => ({
+      addBudgetDialogOpen: !prevState.addBudgetDialogOpen
+    }));
+  };
+
+  handleBudgetAdded = budgetName => {
+    alert(budgetName);
+  };
+
+  render(props) {
+    const { classes } = this.props;
+    return (
+      <BudgetProvider>
+        <div className={classes.root}>
+          <BudgetAppBar title="Budget Application" onAddBudgetClicked={this.toggleAddBudgetDialogState} />
+          <div className={classes.flexContainer}>
+            <div className={classes.categoriesSection}>
+              <BudgetContainer budgets={budgets} />
+            </div>
+            <div className={classes.summarySection}>
+              <SummaryComponent />
+            </div>
           </div>
-          <div className={classes.summarySection}>
-            <SummaryComponent />
-          </div>
+          <AddBudgetDialog
+            open={this.state.addBudgetDialogOpen}
+            onAdd={this.handleBudgetAdded}
+            onCancel={this.toggleAddBudgetDialogState}
+          />
         </div>
-      </div>
-    </BudgetProvider>
-  );
-};
+      </BudgetProvider>
+    );
+  }
+}
 
 App.propTypes = {
   classes: PropTypes.object.isRequired

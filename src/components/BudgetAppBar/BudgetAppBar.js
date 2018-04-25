@@ -5,6 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import Icon from 'material-ui/Icon';
 import SvgIcon from 'material-ui/SvgIcon';
+import AddBudgetDialog from '../AddBudgetDialog';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -24,7 +25,10 @@ const BudgetAppBar = props => {
   return (
     <AppBar className={classes.flexGrow} position="static">
       <Toolbar>
-        <IconButton className={classes.addIcon}>
+        <IconButton
+          className={classes.addIcon}
+          onClick={props.onAddBudgetClicked}
+        >
           <Icon>add_circle_outline</Icon>
         </IconButton>
         <Typography className={classes.title} variant="title" color="inherit">
@@ -35,8 +39,14 @@ const BudgetAppBar = props => {
   );
 };
 
+BudgetAppBar.defaultProps = {
+  title: '',
+  onAddBudgetClicked: () => {}
+};
+
 BudgetAppBar.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  onAddBudgetClicked: PropTypes.func
 };
 
 export default withStyles(styles)(BudgetAppBar);
