@@ -5,7 +5,7 @@ import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } 
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class AddBudgetDialog extends React.Component {
+class AddItemDialog extends React.Component {
   state = {
     budgetCategoryName: ''
   };
@@ -23,11 +23,9 @@ class AddBudgetDialog extends React.Component {
   render() {
     return (
       <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add Budget Category</DialogTitle>
+        <DialogTitle id="form-dialog-title">{this.props.headerLabel}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please enter the title of the budget category that you would like to add
-          </DialogContentText>
+          <DialogContentText>{this.props.description}</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -51,9 +49,11 @@ class AddBudgetDialog extends React.Component {
   }
 }
 
-AddBudgetDialog.propTypes = {
+AddItemDialog.propTypes = {
   onCancel: PropTypes.func.isRequired,
-  onAdd: PropTypes.func.isRequired
+  onAdd: PropTypes.func.isRequired,
+  headerLabel: PropTypes.string.isRequired,
+  description: PropTypes.string.isRerquired
 };
 
-export default AddBudgetDialog;
+export default AddItemDialog;

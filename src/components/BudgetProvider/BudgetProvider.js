@@ -13,6 +13,26 @@ class BudgetProvider extends React.Component {
     budgets
   };
 
+  addNewBudgetLineItem = (budgetName, budgetLineItemName) => {
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      const matchingBudget = copiedBudgets.find(budget => budget.name === budgetName);
+
+      matchingBudget.budgetLineItems.push(
+        new BudgetLineItem({
+          uuid: uuid(),
+          name: budgetLineItemName,
+          amountBudgeted: 0,
+          amountSpent: 0
+        })
+      );
+
+      return {
+        budgets: copiedBudgets
+      };
+    });
+  };
+
   addNewBudgetCategory = budgetName => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
@@ -82,7 +102,8 @@ class BudgetProvider extends React.Component {
         value={{
           budgets: this.state.budgets,
           getSummary: this.calculateSummaries,
-          updateBudget: this.updateBudget
+          updateBudget: this.updateBudget,
+          addNewBudgetCategory: this.addNewBudgetCategory
         }}
       >
         {this.props.children}

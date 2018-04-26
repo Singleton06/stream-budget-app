@@ -5,7 +5,6 @@ import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import Icon from 'material-ui/Icon';
 import SvgIcon from 'material-ui/SvgIcon';
-import AddBudgetDialog from '../AddBudgetDialog';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,7 +13,7 @@ const styles = theme => ({
   appbar: {
     flexGrow: 1
   },
-  dIcon: {},
+  addIcon: {},
   title: {
     flex: 1
   }
@@ -25,10 +24,7 @@ const BudgetAppBar = props => {
   return (
     <AppBar className={classes.flexGrow} position="static">
       <Toolbar>
-        <IconButton
-          className={classes.addIcon}
-          onClick={props.onAddBudgetClicked}
-        >
+        <IconButton className={classes.addIcon} onClick={props.onAddBudgetClicked}>
           <Icon>add_circle_outline</Icon>
         </IconButton>
         <Typography className={classes.title} variant="title" color="inherit">

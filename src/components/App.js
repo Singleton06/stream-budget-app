@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
-import { BudgetProvider } from './BudgetProvider';
+import { BudgetProvider, BudgetContext } from './BudgetProvider';
 import BudgetAppBar from './BudgetAppBar';
 import BudgetContainer from './BudgetContainer';
 import SummaryComponent from './Summary';
-import AddBudgetDialog from './AddBudgetDialog';
+import ModalManager from './ModalManager';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -37,30 +37,37 @@ class App extends React.Component {
     }));
   };
 
-  handleBudgetAdded = budgetName => {
-    alert(budgetName);
+  createCallbackForAddingBudget = budgetAddCallback => {
+    return budgetName => {
+      budgetAddCallback(budgetName);
+      this.setState({
+        addBudgetDialogOpen: false
+      });
+    };
   };
 
   render(props) {
     const { classes } = this.props;
     return (
       <BudgetProvider>
-        <div className={classes.root}>
-          <BudgetAppBar title="Budget Application" onAddBudgetClicked={this.toggleAddBudgetDialogState} />
-          <div className={classes.flexContainer}>
-            <div className={classes.categoriesSection}>
-              <BudgetContainer budgets={budgets} />
-            </div>
-            <div className={classes.summarySection}>
-              <SummaryComponent />
-            </div>
-          </div>
-          <AddBudgetDialog
-            open={this.state.addBudgetDialogOpen}
-            onAdd={this.handleBudgetAdded}
-            onCancel={this.toggleAddBudgetDialogState}
-          />
-        </div>
+        <BudgetContext.Consumer>
+          {consumer => {
+            return (
+              <div className={classes.root}>
+                <BudgetAppBar title="Budget Application" onAddBudgetClicked={this.toggleAddBudgetDialogState} />
+                <div className={classes.flexContainer}>
+                  <div className={classes.categoriesSection}>
+                    <BudgetContainer budgets={budgets} />
+                  </div>
+                  <div className={classes.summarySection}>
+                    <SummaryComponent />
+                  </div>
+                </div>
+                <ModalProvider />
+              </div>
+            );
+          }}
+        </BudgetContext.Consumer>
       </BudgetProvider>
     );
   }
