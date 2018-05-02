@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ExpansionPanel, { ExpansionPanelSummary, ExpansionPanelDetails } from 'material-ui/ExpansionPanel';
+import ExpansionPanel, {ExpansionPanelSummary, ExpansionPanelDetails} from 'material-ui/ExpansionPanel';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody } from 'material-ui/Table';
+import {withStyles} from 'material-ui/styles';
+import Table, {TableBody} from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 
-import { BudgetTableHead, BudgetItemTableRow } from '../BudgetTable';
+import {BudgetTableHead, BudgetItemTableRow} from '../BudgetTable';
 import BudgetLineItem from '../../models/BudgetLineItem';
+import {ModalConsumer, AddLineItemModal} from '../Modal';
 
 const styles = theme => ({
   budgetLineItemContainer: {
@@ -33,15 +34,14 @@ const styles = theme => ({
 
 const headings = ['Name', 'Amount Budgeted', 'Amount Spent', 'Amount Remaining'];
 
-const createCallbackForLineItemProperty = (
-  budgetName,
-  lineItemName,
-  propertyToUpdate,
-  updateBudgetCallback,
-  isNumberValue = true
-) => {
+const createCallbackForLineItemProperty = (budgetName,
+                                           lineItemName,
+                                           propertyToUpdate,
+                                           updateBudgetCallback,
+                                           isNumberValue = true) => {
   if (!updateBudgetCallback) {
-    return () => {};
+    return () => {
+    };
   }
 
   return newPropertyValue => {
@@ -77,7 +77,7 @@ const generateBudgetItemTableRowEntry = (props, lineItem) => {
 };
 
 const BudgetCategory = props => {
-  const { classes } = props;
+  const {classes} = props;
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary>
@@ -86,7 +86,7 @@ const BudgetCategory = props => {
       <ExpansionPanelDetails className={classes.expansionDetails}>
         <Paper className={classes.budgetLineItemContainer}>
           <Table className={classes.table}>
-            <BudgetTableHead names={headings} />
+            <BudgetTableHead names={headings}/>
             <TableBody>
               {props.budgetLineItems.map(lineItem => {
                 return generateBudgetItemTableRowEntry(props, lineItem);
@@ -95,9 +95,16 @@ const BudgetCategory = props => {
           </Table>
         </Paper>
         <div>
-          <Button variant="raised" color="primary" className={classes.button}>
-            Add Line Item
-          </Button>
+          <ModalConsumer>
+            {consumer => {
+              return (
+                <Button variant="raised" color="primary" className={classes.button}
+                      onClick={() => consumer.showModal(AddLineItemModal, {budgetName: props.name})}>
+                  Add Line Item
+                </Button>
+              );
+            }}
+          </ModalConsumer>
         </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>

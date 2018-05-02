@@ -103,7 +103,8 @@ class BudgetProvider extends React.Component {
           budgets: this.state.budgets,
           getSummary: this.calculateSummaries,
           updateBudget: this.updateBudget,
-          addNewBudgetCategory: this.addNewBudgetCategory
+          addNewBudgetCategory: this.addNewBudgetCategory,
+          addNewBudgetLineItem: this.addNewBudgetLineItem
         }}
       >
         {this.props.children}

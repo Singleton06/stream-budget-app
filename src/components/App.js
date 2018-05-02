@@ -6,7 +6,8 @@ import BudgetAppBar from './BudgetAppBar';
 import BudgetContainer from './BudgetContainer';
 import BudgetProvider from './BudgetProvider';
 import SummaryComponent from './Summary';
-import ModalProvider, {ModalContext} from './ModalProvider';
+
+import {ModalRoot, ModalConsumer, ModalProvider, AddBudgetModal } from './Modal';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -44,12 +45,12 @@ class App extends React.Component {
         <ModalProvider>
 
           <div className={classes.root}>
-            <ModalContext.Consumer>
+            <ModalConsumer>
               {consumer => {
                 return <BudgetAppBar title="Budget Application"
-                                     onAddBudgetClicked={consumer.toggleAddBudgetDialogState}/>;
+                                     onAddBudgetClicked={() => consumer.showModal(AddBudgetModal)} />;
               }}
-            </ModalContext.Consumer>
+            </ModalConsumer>
             <div className={classes.flexContainer}>
               <div className={classes.categoriesSection}>
                 <BudgetContainer budgets={budgets}/>
@@ -60,6 +61,7 @@ class App extends React.Component {
             </div>
 
           </div>
+          <ModalRoot/>
         </ModalProvider>
       </BudgetProvider>
     );
