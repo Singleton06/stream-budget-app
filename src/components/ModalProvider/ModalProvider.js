@@ -27,23 +27,29 @@ class ModalProvider extends React.Component {
 
   render() {
     const { addBudgetDialogOpen } = this.state;
+    const self = this;
 
     return (
-      // TODO: render ModalContext.Provider
-      <BudgetContext.Consumer>
-        {consumer => {
-          return (
-            <div>
-              <AddBudgetDialog
-                open={addBudgetDialogOpen}
-                onAdd={this.createCallbackForAddingBudget(consumer.addNewBudgetCategory)}
-                onCancel={this.toggleAddBudgetDialogState}
-              />
-              // render children here after all dialogs
-            </div>
-          );
+      <ModalContext.Provider
+        value={{
+          toggleAddBudgetDialogState: this.toggleAddBudgetDialogState
         }}
-      </BudgetContext.Consumer>
+      >
+        <BudgetContext.Consumer>
+          {consumer => {
+            return (
+              <div>
+                <AddBudgetDialog
+                  open={addBudgetDialogOpen}
+                  onAdd={self.createCallbackForAddingBudget(consumer.addNewBudgetCategory)}
+                  onCancel={self.toggleAddBudgetDialogState}
+                />
+                {this.props.children}
+              </div>
+            );
+          }}
+        </BudgetContext.Consumer>
+      </ModalContext.Provider>
     );
   }
 }

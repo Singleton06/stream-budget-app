@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
-import { BudgetProvider, BudgetContext } from './BudgetProvider';
 import BudgetAppBar from './BudgetAppBar';
 import BudgetContainer from './BudgetContainer';
 import SummaryComponent from './Summary';
-import ModalManager from './ModalManager';
+import ModalProvider, { ModalContext } from './ModalProvider';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -49,26 +48,22 @@ class App extends React.Component {
   render(props) {
     const { classes } = this.props;
     return (
-      <BudgetProvider>
-        <BudgetContext.Consumer>
+      <div className={classes.root}>
+        <ModalContext.Consumer>
           {consumer => {
-            return (
-              <div className={classes.root}>
-                <BudgetAppBar title="Budget Application" onAddBudgetClicked={this.toggleAddBudgetDialogState} />
-                <div className={classes.flexContainer}>
-                  <div className={classes.categoriesSection}>
-                    <BudgetContainer budgets={budgets} />
-                  </div>
-                  <div className={classes.summarySection}>
-                    <SummaryComponent />
-                  </div>
-                </div>
-                <ModalProvider />
-              </div>
-            );
+            return <BudgetAppBar title="Budget Application" onAddBudgetClicked={consumer.toggleAddBudgetDialogState} />;
           }}
-        </BudgetContext.Consumer>
-      </BudgetProvider>
+        </ModalContext.Consumer>
+        <div className={classes.flexContainer}>
+          <div className={classes.categoriesSection}>
+            <BudgetContainer budgets={budgets} />
+          </div>
+          <div className={classes.summarySection}>
+            <SummaryComponent />
+          </div>
+        </div>
+        <ModalProvider />
+      </div>
     );
   }
 }
