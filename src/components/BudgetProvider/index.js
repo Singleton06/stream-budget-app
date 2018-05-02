@@ -1,2 +1,4 @@
 import BudgetProvider, { BudgetContext } from './BudgetProvider';
-export { BudgetProvider, BudgetContext };
+
+export default BudgetProvider;
+export { BudgetContext };

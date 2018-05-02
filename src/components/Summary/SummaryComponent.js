@@ -1,13 +1,13 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import Table, { TableBody } from 'material-ui/Table';
+import Table from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import SummaryTableBody from './SummaryTableBody';
 
-import { BudgetTableHead, BudgetItemTableRow } from '../BudgetTable';
+import { BudgetTableHead } from '../BudgetTable';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     overflowX: 'auto'
   }

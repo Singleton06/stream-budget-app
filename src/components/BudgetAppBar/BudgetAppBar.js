@@ -4,13 +4,12 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import Icon from 'material-ui/Icon';
-import SvgIcon from 'material-ui/SvgIcon';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const styles = theme => ({
-  appbar: {
+const styles = () => ({
+  flexGrow: {
     flexGrow: 1
   },
   addIcon: {},
