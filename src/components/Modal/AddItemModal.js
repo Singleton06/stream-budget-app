@@ -20,9 +20,17 @@ class AddItemModal extends React.Component {
     this.props.onAdd(this.state.budgetCategoryName);
   };
 
+  handleKeyPress = (event) => {
+    if (event.key === 'Escape') {
+      this.props.onCancel && this.props.onCancel() ;
+    } else if (event.key === 'Enter') {
+      this.handleAddButtonClicked();
+    }
+  }
+
   render() {
     return (
-      <Dialog open onClose={this.props.handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open onClose={this.props.handleClose} aria-labelledby="form-dialog-title" onKeyDown={this.handleKeyPress}>
         <DialogTitle id="form-dialog-title">{this.props.headerLabel}</DialogTitle>
         <DialogContent>
           <DialogContentText>{this.props.description}</DialogContentText>

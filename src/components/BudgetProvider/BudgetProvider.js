@@ -75,6 +75,23 @@ class BudgetProvider extends React.Component {
     });
   };
 
+  calculateSummariesWithTotal= () => {
+    const summaries = this.calculateSummaries();
+    const totalSummary  = summaries.reduce((accumulator, currentValue) => {
+      return {
+        budgeted: currentValue.amountBudgeted + accumulator.budgeted,
+        spent: currentValue.amountSpent + accumulator.spent
+      }
+    }, {budgeted: 0 , spent: 0});
+
+    summaries.push(new Summary({
+      name: 'Total',
+      amountBudgeted: totalSummary.budgeted,
+      amountSpent: totalSummary.spent
+    }));
+    return summaries;
+  }
+
   calculateSummaries = () => {
     const { budgets } = this.state;
     return budgets.map(singleBudget => {
@@ -102,6 +119,7 @@ class BudgetProvider extends React.Component {
         value={{
           budgets: this.state.budgets,
           getSummary: this.calculateSummaries,
+          getSummaryWithTotal: this.calculateSummariesWithTotal,
           updateBudget: this.updateBudget,
           addNewBudgetCategory: this.addNewBudgetCategory,
           addNewBudgetLineItem: this.addNewBudgetLineItem

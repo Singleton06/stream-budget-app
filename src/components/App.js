@@ -7,7 +7,7 @@ import BudgetContainer from './BudgetContainer';
 import BudgetProvider from './BudgetProvider';
 import SummaryComponent from './Summary';
 
-import {ModalRoot, ModalConsumer, ModalProvider, AddBudgetModal } from './Modal';
+import {ModalRoot, ModalConsumer, ModalProvider, AddBudgetModal} from './Modal';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -28,42 +28,62 @@ const styles = {
 };
 
 class App extends React.Component {
-  state = {
-    addBudgetDialogOpen: false
-  };
+  constructor(props) {
+    super(props);
+  }
 
-  toggleAddBudgetDialogState = () => {
-    this.setState(prevState => ({
-      addBudgetDialogOpen: !prevState.addBudgetDialogOpen
-    }));
-  };
+  createKeyDownHandler = (modalConsumer) => {
+    return (event) => {
+      console.log('callback handler', event.key);
+      if (event.altKey && event.key === 'a') {
+        modalConsumer.showModal(AddBudgetModal);
+      }
+    }
+  }
 
-  render(props) {
+  handleKeyPress(event) {
+    console.log('handleKeyPress', event.key);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  render() {
     const {classes} = this.props;
     return (
-      <BudgetProvider>
-        <ModalProvider>
-
-          <div className={classes.root}>
+      <div>
+        <BudgetProvider>
+          <ModalProvider>
             <ModalConsumer>
-              {consumer => {
-                return <BudgetAppBar title="Budget Application"
-                                     onAddBudgetClicked={() => consumer.showModal(AddBudgetModal)} />;
+              {modalConsumer => {
+                return (
+                  <div className={classes.root} onKeyDown={this.createKeyDownHandler(modalConsumer)}>
+                    <BudgetAppBar title="Budget Application"
+                                  onAddBudgetClicked={() => modalConsumer.showModal(AddBudgetModal)}/>
+                    <div className={classes.flexContainer}>
+
+                      <div className={classes.categoriesSection}>
+                        <BudgetContainer budgets={budgets}/>
+                      </div>
+
+                      <div className={classes.summarySection}>
+                        <SummaryComponent/>
+                      </div>
+                    </div>
+                  </div>
+                );
               }}
             </ModalConsumer>
-            <div className={classes.flexContainer}>
-              <div className={classes.categoriesSection}>
-                <BudgetContainer budgets={budgets}/>
-              </div>
-              <div className={classes.summarySection}>
-                <SummaryComponent/>
-              </div>
-            </div>
+            <ModalRoot/>
 
-          </div>
-          <ModalRoot/>
-        </ModalProvider>
-      </BudgetProvider>
+          </ModalProvider>
+        </BudgetProvider>
+      </div>
     );
   }
 }
