@@ -7,7 +7,7 @@ import BudgetContainer from './BudgetContainer';
 import BudgetProvider from './BudgetProvider';
 import SummaryComponent from './Summary';
 
-import {ModalRoot, ModalConsumer, ModalProvider, AddBudgetModal} from './Modal';
+import {ModalRoot, ModalConsumer, ModalProvider, AddBudgetModal, ModalGlobalShortcutComponent} from './Modal';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -28,30 +28,6 @@ const styles = {
 };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  createKeyDownHandler = (modalConsumer) => {
-    return (event) => {
-      console.log('callback handler', event.key);
-      if (event.altKey && event.key === 'a') {
-        modalConsumer.showModal(AddBudgetModal);
-      }
-    }
-  }
-
-  handleKeyPress(event) {
-    console.log('handleKeyPress', event.key);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyPress);
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyPress);
-  }
 
   render() {
     const {classes} = this.props;
@@ -62,7 +38,7 @@ class App extends React.Component {
             <ModalConsumer>
               {modalConsumer => {
                 return (
-                  <div className={classes.root} onKeyDown={this.createKeyDownHandler(modalConsumer)}>
+                  <div className={classes.root}>
                     <BudgetAppBar title="Budget Application"
                                   onAddBudgetClicked={() => modalConsumer.showModal(AddBudgetModal)}/>
                     <div className={classes.flexContainer}>
@@ -75,12 +51,12 @@ class App extends React.Component {
                         <SummaryComponent/>
                       </div>
                     </div>
+                    <ModalGlobalShortcutComponent consumer={modalConsumer}/>
                   </div>
                 );
               }}
             </ModalConsumer>
             <ModalRoot/>
-
           </ModalProvider>
         </BudgetProvider>
       </div>
