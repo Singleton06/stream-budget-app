@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 
 import BudgetAppBar from './BudgetAppBar';
-import BudgetContainer from './BudgetContainer';
+import BudgetCategoriesContainer from './BudgetCategoriesContainer';
 import BudgetProvider from './BudgetProvider';
 import SummaryComponent from './Summary';
+import BudgetSelectorTabs from './BudgetSelectorTabs';
 
-import {ModalRoot, ModalConsumer, ModalProvider, AddBudgetModal, ModalGlobalShortcutComponent} from './Modal';
+import {ModalRoot, ModalConsumer, ModalProvider, ModalGlobalShortcutComponent} from './Modal';
 
 const budgets = ['Food', 'Housing', 'Charity'];
 
@@ -35,27 +36,22 @@ class App extends React.Component {
       <div>
         <BudgetProvider>
           <ModalProvider>
-            <ModalConsumer>
-              {modalConsumer => {
-                return (
-                  <div className={classes.root}>
-                    <BudgetAppBar title="Budget Application"
-                                  onAddBudgetClicked={() => modalConsumer.showModal(AddBudgetModal)}/>
-                    <div className={classes.flexContainer}>
+            <div className={classes.root}>
+              <BudgetAppBar title="Budget Application"/>
+              <BudgetSelectorTabs/>
+              <div className={classes.flexContainer}>
+                <div className={classes.categoriesSection}>
+                  <BudgetCategoriesContainer budgets={budgets}/>
+                </div>
+                <div className={classes.summarySection}>
+                  <SummaryComponent/>
+                </div>
+              </div>
 
-                      <div className={classes.categoriesSection}>
-                        <BudgetContainer budgets={budgets}/>
-                      </div>
-
-                      <div className={classes.summarySection}>
-                        <SummaryComponent/>
-                      </div>
-                    </div>
-                    <ModalGlobalShortcutComponent consumer={modalConsumer}/>
-                  </div>
-                );
-              }}
-            </ModalConsumer>
+              <ModalConsumer>
+                {modalConsumer => (<ModalGlobalShortcutComponent consumer={modalConsumer}/>)}
+              </ModalConsumer>
+            </div>
             <ModalRoot/>
           </ModalProvider>
         </BudgetProvider>

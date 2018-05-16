@@ -1,25 +1,37 @@
+
+
 /**
- * Represents a collection of budget line items.
+ * Class representing a Budget.
  *
  * @property {string} name
  *    The name of the budget.
- * @property {BudgetLineItem[]} budgetLineItems
- *    The items within the budget.
  * @property {string} uuid
- *    Unique identifier for the budget
+ *    The unique identifier of the budget.
+ * @property {BudgetCategory[]} budgetCategories
+ *    The different categories that belong to the budget.
  */
 class Budget {
-  constructor({ name, budgetLineItems, uuid }) {
+  /**
+   * Default constructor.
+   *
+   * @param {string} name
+   *    The name of the budget.
+   * @param {string} uuid
+   *    The unique identifier of the budget.
+   * @param {BudgetCategory[]} budgetCategories
+   *    The different categories that belong to the budget.
+   */
+  constructor({name, uuid, budgetCategories}) {
     this.name = name;
-    this.budgetLineItems = budgetLineItems;
     this.uuid = uuid;
+    this.budgetCategories = budgetCategories;
   }
 
   copy() {
     return new Budget({
       name: this.name,
-      budgetLineItems: this.budgetLineItems.map(item => item.copy()),
-      uuid: this.uuid
+      uuid: this.uuid,
+      budgetCategories: this.budgetCategories.map(category => category.copy())
     });
   }
 }

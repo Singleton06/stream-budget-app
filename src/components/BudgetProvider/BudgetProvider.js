@@ -1,22 +1,24 @@
 import React from 'react';
 import BudgetLineItem from '../../models/BudgetLineItem';
-import Budget from '../../models/Budget';
+import BudgetCategory from '../../models/BudgetCategory';
 import Summary from '../../models/Summary';
 import uuid from 'uuid/v4';
 
-import budgets from './mock-data.js';
+import mockData from './mock-data.js';
 
 export const BudgetContext = React.createContext();
 
 class BudgetProvider extends React.Component {
   state = {
-    budgets
+    budgets: mockData.budgets,
+    currentlySelectedBudget: mockData.currentlySelectedBudget
   };
 
   addNewBudgetLineItem = (budgetName, budgetLineItemName) => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
-      const matchingBudget = copiedBudgets.find(budget => budget.name === budgetName);
+      const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
+      const matchingBudget = currentlySelectedBudget.budgetCategories.find(budget => budget.name === budgetName);
 
       matchingBudget.budgetLineItems.push(
         new BudgetLineItem({
@@ -36,8 +38,9 @@ class BudgetProvider extends React.Component {
   addNewBudgetCategory = budgetName => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
-      copiedBudgets.push(
-        new Budget({
+      const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
+      currentlySelectedBudget.budgetCategories.push(
+        new BudgetCategory({
           name: budgetName,
           uuid: uuid(),
           budgetLineItems: []
@@ -55,15 +58,21 @@ class BudgetProvider extends React.Component {
     return budgets.map(budget => budget.copy());
   };
 
-  updateBudget = (budgetName, lineItemName, propertyToUpdate, propertyNewValue) => {
+  getCurrentlySelectedBudget = (budgets) => {
+    return budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget);
+  };
+
+  updateBudget = (budgetCategoryName, lineItemName, propertyToUpdate, propertyNewValue) => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
-      const matchingBudget = copiedBudgets.find(budget => budget.name === budgetName);
-      const budgetLineItem = matchingBudget.budgetLineItems.find(lineItem => lineItem.name === lineItemName);
+      const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
 
-      const budgetLineItemIndex = matchingBudget.budgetLineItems.indexOf(budgetLineItem);
+      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budget => budget.name === budgetCategoryName);
+      const budgetLineItem = matchingBudgetCategory.budgetLineItems.find(lineItem => lineItem.name === lineItemName);
 
-      matchingBudget.budgetLineItems[budgetLineItemIndex] = new BudgetLineItem({
+      const budgetLineItemIndex = matchingBudgetCategory.budgetLineItems.indexOf(budgetLineItem);
+
+      matchingBudgetCategory.budgetLineItems[budgetLineItemIndex] = new BudgetLineItem({
         ...budgetLineItem,
         [propertyToUpdate]: propertyNewValue
       });
@@ -90,11 +99,11 @@ class BudgetProvider extends React.Component {
       amountSpent: totalSummary.spent
     }));
     return summaries;
-  }
+  };
 
   calculateSummaries = () => {
-    const { budgets } = this.state;
-    return budgets.map(singleBudget => {
+    const budgetCategories = this.getBudgetCategoriesForCurrentBudget();
+    return budgetCategories.map(singleBudget => {
       const summaryStructure = singleBudget.budgetLineItems.reduce(
         (accumulator, currentValue) => {
           return {
@@ -113,11 +122,17 @@ class BudgetProvider extends React.Component {
     });
   };
 
+  getBudgetCategoriesForCurrentBudget = () => {
+    console.log('getBudgetCategoriesForCurrentBudget', this.state.budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget));
+
+    return this.state.budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget).budgetCategories;
+  };
+
   render() {
     return (
       <BudgetContext.Provider
         value={{
-          budgets: this.state.budgets,
+          getBudgetCategoriesForCurrentBudget: this.getBudgetCategoriesForCurrentBudget,
           getSummary: this.calculateSummaries,
           getSummaryWithTotal: this.calculateSummariesWithTotal,
           updateBudget: this.updateBudget,

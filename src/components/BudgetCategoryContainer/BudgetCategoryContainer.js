@@ -76,7 +76,7 @@ const generateBudgetItemTableRowEntry = (props, lineItem) => {
   );
 };
 
-const BudgetCategory = props => {
+const BudgetCategoryContainer = props => {
   const {classes} = props;
   return (
     <ExpansionPanel>
@@ -99,7 +99,7 @@ const BudgetCategory = props => {
             {consumer => {
               return (
                 <Button variant="raised" color="primary" className={classes.button}
-                      onClick={() => consumer.showModal(AddLineItemModal, {budgetName: props.name})}>
+                        onClick={() => consumer.showModal(AddLineItemModal, {budgetName: props.name})}>
                   Add Line Item
                 </Button>
               );
@@ -112,10 +112,10 @@ const BudgetCategory = props => {
 };
 
 // TODO: add default props
-BudgetCategory.propTypes = {
+BudgetCategoryContainer.propTypes = {
   name: PropTypes.string.isRequired,
   budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem)),
   onBudgetUpdate: PropTypes.func
 };
 
-export default withStyles(styles)(BudgetCategory);
+export default withStyles(styles)(BudgetCategoryContainer);
