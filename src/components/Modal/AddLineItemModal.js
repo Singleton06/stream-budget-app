@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import AddItemModal from './AddItemModal';
 import {ModalConsumer} from './ModalContext';
-import {BudgetContext} from '../BudgetProvider';
+import {BudgetConsumer} from '../BudgetProvider';
 
 const AddLineItemModal = props => (
-  <BudgetContext.Consumer>
+  <BudgetConsumer>
     {budgetConsumer => {
       return (
         <ModalConsumer>
@@ -27,11 +27,11 @@ const AddLineItemModal = props => (
         </ModalConsumer>
       );
     }}
-  </BudgetContext.Consumer>
+  </BudgetConsumer>
 );
 
 AddLineItemModal.propTypes = {
   budgetName: PropTypes.string.isRequired
-}
+};
 
 export default AddLineItemModal;

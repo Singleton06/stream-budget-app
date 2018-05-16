@@ -1,5 +1,5 @@
 import BudgetCategoryContainer from '../BudgetCategoryContainer';
-import {BudgetContext} from '../BudgetProvider';
+import {BudgetConsumer} from '../BudgetProvider';
 import {AddBudgetModal, ModalConsumer} from "../Modal";
 
 import React from 'react';
@@ -19,7 +19,7 @@ const BudgetCategoriesContainer = (props) => {
   const { classes } =  props;
   return (
     <React.Fragment>
-      <BudgetContext.Consumer>
+      <BudgetConsumer>
         {budgetConsumer => {
           return budgetConsumer.getBudgetCategoriesForCurrentBudget().map(budget => {
             return (
@@ -32,7 +32,7 @@ const BudgetCategoriesContainer = (props) => {
             );
           });
         }}
-      </BudgetContext.Consumer>
+      </BudgetConsumer>
       <ModalConsumer>
         {modalConsumer => (
           <Button variant="raised" color="primary" className={classes.button}

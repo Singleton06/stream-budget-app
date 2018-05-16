@@ -1,25 +1,36 @@
 import React from 'react';
 import Tabs, {Tab} from 'material-ui/Tabs';
+import Icon from 'material-ui/Icon';
 
-import {BudgetContext} from "../BudgetProvider";
+import {BudgetConsumer} from "../BudgetProvider";
+
+const addBudgetKey = 'add_budget';
 
 
+const addIcon = <Icon>add_circle</Icon>;
 
 const renderTabs = (budgets, selectionCallback) => {
-  const onChangeCallback = (event, value) => selectionCallback(value);
+  const onChangeCallback = (event, value) => {
+    if (value === addBudgetKey) {
+      // TODO: open add budget modal
+      return;
+    }
+    selectionCallback(value);
+  };
 
   return (
     <Tabs value={budgets.find(budget => budget.isCurrentlySelectedBudget).uuid} onChange={onChangeCallback}>
-      {budgets.map(budget => <Tab label={budget.name} value={budget.uuid}/>)}
+      {budgets.map(budget => <Tab key={budget.uuid} label={budget.name} value={budget.uuid}/>)}
+      <Tab key={addBudgetKey} icon={addIcon} value={addBudgetKey} />
     </Tabs>
   );
 };
 
 const BudgetSelectorTabs = () => {
   return (
-    <BudgetContext.Consumer>
+    <BudgetConsumer>
       {consumer => renderTabs(consumer.getBudgetsList(), consumer.updateCurrentlySelectedBudget)}
-    </BudgetContext.Consumer>
+    </BudgetConsumer>
   );
 };
 

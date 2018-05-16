@@ -6,7 +6,8 @@ import uuid from 'uuid/v4';
 
 import mockData from './mock-data.js';
 
-export const BudgetContext = React.createContext();
+const BudgetContext = React.createContext();
+const BudgetConsumer = BudgetContext.Consumer;
 
 class BudgetProvider extends React.Component {
   state = {
@@ -137,8 +138,6 @@ class BudgetProvider extends React.Component {
   };
 
   getBudgetCategoriesForCurrentBudget = () => {
-    console.log('getBudgetCategoriesForCurrentBudget', this.state.budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget));
-
     return this.state.budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget).budgetCategories;
   };
 
@@ -162,4 +161,7 @@ class BudgetProvider extends React.Component {
   }
 }
 
-export default BudgetProvider;
+export {
+  BudgetProvider,
+  BudgetConsumer
+};

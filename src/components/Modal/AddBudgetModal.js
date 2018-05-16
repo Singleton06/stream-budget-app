@@ -2,11 +2,11 @@ import React from 'react';
 
 import AddItemModal from './AddItemModal';
 import {ModalConsumer} from './ModalContext';
-import {BudgetContext} from '../BudgetProvider';
+import {BudgetConsumer} from '../BudgetProvider';
 
 
 const AddBudgetModal = props => (
-  <BudgetContext.Consumer>
+  <BudgetConsumer>
     {budgetConsumer => {
       return (
         <ModalConsumer>
@@ -27,7 +27,7 @@ const AddBudgetModal = props => (
         </ModalConsumer>
       );
     }}
-  </BudgetContext.Consumer>
+  </BudgetConsumer>
 );
 
 export default AddBudgetModal;

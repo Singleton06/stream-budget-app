@@ -4,7 +4,7 @@ import {withStyles} from 'material-ui/styles';
 
 import BudgetAppBar from './BudgetAppBar';
 import BudgetCategoriesContainer from './BudgetCategoriesContainer';
-import BudgetProvider from './BudgetProvider';
+import {BudgetProvider} from './BudgetProvider';
 import SummaryComponent from './Summary';
 import BudgetSelectorTabs from './BudgetSelectorTabs';
 
