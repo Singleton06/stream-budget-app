@@ -98,7 +98,7 @@ const BudgetCategoryContainer = props => {
           <ModalConsumer>
             {consumer => {
               return (
-                <Button color="primary" className={classes.button}
+                <Button variant="flat" color="primary" className={classes.button}
                         onClick={() => consumer.showModal(AddLineItemModal, {budgetName: props.name})}>
                   Add Line Item
                 </Button>
