@@ -1,5 +1,3 @@
-
-
 /**
  * Class representing a Budget.
  *

@@ -14,6 +14,20 @@ class BudgetProvider extends React.Component {
     currentlySelectedBudget: mockData.currentlySelectedBudget
   };
 
+  updateCurrentlySelectedBudget = (uuid) => {
+    this.setState({
+      currentlySelectedBudget: uuid
+    })
+  };
+
+  getBudgetsList = () => {
+    return this.state.budgets.map(budget => ({
+      name: budget.name,
+      uuid: budget.uuid,
+      isCurrentlySelectedBudget: budget.uuid === this.state.currentlySelectedBudget
+    }));
+  };
+
   addNewBudgetLineItem = (budgetName, budgetLineItemName) => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
@@ -132,6 +146,8 @@ class BudgetProvider extends React.Component {
     return (
       <BudgetContext.Provider
         value={{
+          updateCurrentlySelectedBudget: this.updateCurrentlySelectedBudget,
+          getBudgetsList: this.getBudgetsList,
           getBudgetCategoriesForCurrentBudget: this.getBudgetCategoriesForCurrentBudget,
           getSummary: this.calculateSummaries,
           getSummaryWithTotal: this.calculateSummariesWithTotal,
