@@ -4,7 +4,7 @@ import AddItemModal from './AddItemModal';
 import {ModalConsumer} from './ModalContext';
 import {BudgetConsumer} from '../BudgetProvider';
 
-const AddBudgetModal = props => (
+const AddBudgetCategoryModal = props => (
   <BudgetConsumer>
     {budgetConsumer => {
       return (
@@ -12,11 +12,11 @@ const AddBudgetModal = props => (
           {modalConsumer => {
             return (
               <AddItemModal
-                headerLabel="Add Budget"
-                description="Please enter the title of the budget that you would like to add"
+                headerLabel="Add Budget Category"
+                description="Please enter the title of the budget category that you would like to add"
                 onCancel={modalConsumer.hideModal}
-                onAdd={(budgetName) => {
-                  budgetConsumer.addNewBudget(budgetName);
+                onAdd={(budgetCategoryName) => {
+                  budgetConsumer.addNewBudgetCategory(budgetCategoryName);
                   modalConsumer.hideModal();
                 }}
                 {...props}
@@ -29,4 +29,4 @@ const AddBudgetModal = props => (
   </BudgetConsumer>
 );
 
-export default AddBudgetModal;
+export default AddBudgetCategoryModal;

@@ -1,12 +1,14 @@
 import ModalRoot from './ModalRoot';
 import { ModalProvider, ModalConsumer} from './ModalContext';
-import AddBudgetModal from './AddBudgetModal';
+import AddBudgetCategoryModal from './AddBudgetCategoryModal';
 import AddLineItemModal from './AddLineItemModal';
+import AddBudgetModal from './AddBudgetModal';
 import ModalGlobalShortcutComponent from './ModalGlobalShortcutComponent';
 
 export {
-  AddBudgetModal,
+  AddBudgetCategoryModal,
   AddLineItemModal,
+  AddBudgetModal,
   ModalRoot,
   ModalConsumer,
   ModalProvider,

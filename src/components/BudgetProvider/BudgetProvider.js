@@ -2,6 +2,7 @@ import React from 'react';
 import BudgetLineItem from '../../models/BudgetLineItem';
 import BudgetCategory from '../../models/BudgetCategory';
 import Summary from '../../models/Summary';
+import Budget from '../../models/Budget';
 import uuid from 'uuid/v4';
 
 import mockData from './mock-data.js';
@@ -50,13 +51,29 @@ class BudgetProvider extends React.Component {
     });
   };
 
-  addNewBudgetCategory = budgetName => {
+  addNewBudget = budgetName => {
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      const newBudget = new Budget({
+        uuid: uuid(),
+        name: budgetName,
+        budgetCategories: []
+      });
+
+      return {
+        budgets: [newBudget, ...copiedBudgets],
+        currentlySelectedBudget: newBudget.uuid
+      };
+    })
+  }
+
+  addNewBudgetCategory = budgetCategoryName => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
       currentlySelectedBudget.budgetCategories.push(
         new BudgetCategory({
-          name: budgetName,
+          name: budgetCategoryName,
           uuid: uuid(),
           budgetLineItems: []
         })
@@ -152,7 +169,8 @@ class BudgetProvider extends React.Component {
           getSummaryWithTotal: this.calculateSummariesWithTotal,
           updateBudget: this.updateBudget,
           addNewBudgetCategory: this.addNewBudgetCategory,
-          addNewBudgetLineItem: this.addNewBudgetLineItem
+          addNewBudgetLineItem: this.addNewBudgetLineItem,
+          addNewBudget: this.addNewBudget
         }}
       >
         {this.props.children}

@@ -20,11 +20,8 @@ const styles = {
     display: 'flex',
     alignItems: 'stretch'
   },
-  summarySection: {
-    flexGrow: '7'
-  },
   categoriesSection: {
-    flexGrow: '3'
+    flexGrow: 1
   }
 };
 
@@ -43,7 +40,7 @@ class App extends React.Component {
                 <div className={classes.categoriesSection}>
                   <BudgetCategoriesContainer budgets={budgets}/>
                 </div>
-                <div className={classes.summarySection}>
+                <div>
                   <SummaryComponent/>
                 </div>
               </div>

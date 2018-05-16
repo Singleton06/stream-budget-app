@@ -9,8 +9,10 @@ import { BudgetTableHead } from '../BudgetTable';
 
 const styles = () => ({
   root: {
-    overflowX: 'auto'
+    overflowX: 'auto',
+    flexGrow: 1
   }
+
 });
 
 const headings = [

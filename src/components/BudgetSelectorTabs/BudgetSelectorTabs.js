@@ -3,19 +3,18 @@ import Tabs, {Tab} from 'material-ui/Tabs';
 import Icon from 'material-ui/Icon';
 
 import {BudgetConsumer} from "../BudgetProvider";
+import {ModalConsumer, AddBudgetModal} from "../Modal";
 
 const addBudgetKey = 'add_budget';
-
-
 const addIcon = <Icon>add_circle</Icon>;
 
-const renderTabs = (budgets, selectionCallback) => {
+const renderTabs = (budgets, budgetConsumer, modalConsumer) => {
   const onChangeCallback = (event, value) => {
     if (value === addBudgetKey) {
-      // TODO: open add budget modal
+      modalConsumer.showModal(AddBudgetModal);
       return;
     }
-    selectionCallback(value);
+    budgetConsumer.updateCurrentlySelectedBudget(value);
   };
 
   return (
@@ -29,7 +28,11 @@ const renderTabs = (budgets, selectionCallback) => {
 const BudgetSelectorTabs = () => {
   return (
     <BudgetConsumer>
-      {consumer => renderTabs(consumer.getBudgetsList(), consumer.updateCurrentlySelectedBudget)}
+      {budgetConsumer => (
+        <ModalConsumer>
+          {modalConsumer => renderTabs(budgetConsumer.getBudgetsList(), budgetConsumer, modalConsumer)}
+        </ModalConsumer>
+      )}
     </BudgetConsumer>
   );
 };

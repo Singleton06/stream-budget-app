@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddBudgetModal from './AddBudgetModal';
+import AddBudgetCategoryModal from './AddBudgetCategoryModal';
 
 
 class ModalGlobalShortcutComponent extends React.Component {
@@ -15,7 +15,7 @@ class ModalGlobalShortcutComponent extends React.Component {
 
   handleKeyDownEvent = (event) => {
     if (event.altKey && event.key === 'a') {
-      this.props.consumer.showModal(AddBudgetModal);
+      this.props.consumer.showModal(AddBudgetCategoryModal);
     }
   }
 
