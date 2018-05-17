@@ -5,10 +5,19 @@ import Icon from 'material-ui/Icon';
 import {BudgetConsumer} from "../BudgetProvider";
 import {ModalConsumer, AddBudgetModal} from "../Modal";
 
+import {withStyles} from 'material-ui/styles';
+
+const styles = () => ({
+  addButton: {
+    width: "10px",
+    minWidth: "25px"
+  }
+});
+
 const addBudgetKey = 'add_budget';
 const addIcon = <Icon>add_circle</Icon>;
 
-const renderTabs = (budgets, budgetConsumer, modalConsumer) => {
+const renderTabs = (budgets, budgetConsumer, modalConsumer, classes) => {
   const onChangeCallback = (event, value) => {
     if (value === addBudgetKey) {
       modalConsumer.showModal(AddBudgetModal);
@@ -20,21 +29,22 @@ const renderTabs = (budgets, budgetConsumer, modalConsumer) => {
   return (
     <Tabs value={budgets.find(budget => budget.isCurrentlySelectedBudget).uuid} onChange={onChangeCallback}>
       {budgets.map(budget => <Tab key={budget.uuid} label={budget.name} value={budget.uuid}/>)}
-      <Tab key={addBudgetKey} icon={addIcon} value={addBudgetKey} />
+      <Tab key={addBudgetKey} icon={addIcon} value={addBudgetKey} className={classes.addButton} />
     </Tabs>
   );
 };
 
-const BudgetSelectorTabs = () => {
+const BudgetSelectorTabs = (props) => {
+  const {classes} = props;
   return (
     <BudgetConsumer>
       {budgetConsumer => (
         <ModalConsumer>
-          {modalConsumer => renderTabs(budgetConsumer.getBudgetsList(), budgetConsumer, modalConsumer)}
+          {modalConsumer => renderTabs(budgetConsumer.getBudgetsList(), budgetConsumer, modalConsumer, classes)}
         </ModalConsumer>
       )}
     </BudgetConsumer>
   );
 };
 
-export default BudgetSelectorTabs;
+export default withStyles(styles)(BudgetSelectorTabs);
