@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TableBody} from 'material-ui/Table';
+import TableBody from '@material-ui/core/TableBody';
 import {BudgetItemTableRow} from '../BudgetTable';
 import {BudgetConsumer} from '../BudgetProvider';
 

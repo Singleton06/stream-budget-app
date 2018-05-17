@@ -3,10 +3,10 @@ import {BudgetConsumer} from '../BudgetProvider';
 import {AddBudgetCategoryModal, ModalConsumer} from "../Modal";
 
 import React from 'react';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 
-import {withStyles} from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   button: {
@@ -28,8 +28,7 @@ const renderAddBudgetCategoryButton = (classes, variant = 'flat') => {
       )}
     </ModalConsumer>
   );
-}
-
+};
 
 const BudgetCategoriesContainer = (props) => {
   const {classes} = props;

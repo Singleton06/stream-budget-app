@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ExpansionPanel, {ExpansionPanelSummary, ExpansionPanelDetails} from 'material-ui/ExpansionPanel';
-import Typography from 'material-ui/Typography';
-import {withStyles} from 'material-ui/styles';
-import Table, {TableBody} from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import {withStyles} from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 import {BudgetTableHead, BudgetItemTableRow} from '../BudgetTable';
 import BudgetLineItem from '../../models/BudgetLineItem';

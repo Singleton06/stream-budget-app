@@ -1,8 +1,8 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
-import Table from 'material-ui/Table';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import SummaryTableBody from './SummaryTableBody';
 
 import { BudgetTableHead } from '../BudgetTable';

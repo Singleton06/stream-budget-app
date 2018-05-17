@@ -1,6 +1,7 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import { TableRow, TableCell } from 'material-ui/Table';
+import TextField from '@material-ui/core/TextField';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 
 const BudgetItemTableRow = props => {

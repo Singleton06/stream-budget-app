@@ -1,11 +1,12 @@
 import React from 'react';
-import Tabs, {Tab} from 'material-ui/Tabs';
-import Icon from 'material-ui/Icon';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Icon from '@material-ui/core/Icon';
 
 import {BudgetConsumer} from "../BudgetProvider";
 import {ModalConsumer, AddBudgetModal} from "../Modal";
 
-import {withStyles} from 'material-ui/styles';
+import {withStyles} from '@material-ui/core/styles';
 
 const styles = () => ({
   addButton: {
