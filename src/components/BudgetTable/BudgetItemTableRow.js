@@ -1,10 +1,26 @@
-import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import React from 'react';
 import PropTypes from 'prop-types';
 
+const renderDeleteButton = props => {
+  return (
+    <TableCell padding='none'>
+      <IconButton aria-label="Delete" onClick={props.onChangeCallbacks.onDelete}>
+        <DeleteIcon />
+      </IconButton>
+    </TableCell>
+  );
+};
+
 const BudgetItemTableRow = props => {
+
+
+
   return (
     <TableRow>
       {/* TODO: add change listener for the name */}
@@ -48,6 +64,7 @@ const BudgetItemTableRow = props => {
           disabled={props.disableAllInputFields || props.disableAmountRemaining}
         />
       </TableCell>
+      {props.showDelete && renderDeleteButton(props)}
     </TableRow>
   );
 };
@@ -63,10 +80,12 @@ BudgetItemTableRow.defaultProps = {
   disableAmountBudgeted: false,
   disableAmountSpent: false,
   disableAmountRemaining: false,
+  showDelete: false,
   onChangeCallbacks: {
     onNameChange: () => {},
     onAmountBudgetedChanged: () => {},
-    onAmountSpentChanged: () => {}
+    onAmountSpentChanged: () => {},
+    onDelete: () => {}
   }
 };
 
@@ -81,10 +100,12 @@ BudgetItemTableRow.propTypes = {
   disableAmountBudgeted: PropTypes.bool,
   disableAmountSpent: PropTypes.bool,
   disableAmountRemaining: PropTypes.bool,
+  showDelete: PropTypes.bool,
   onChangeCallbacks: PropTypes.shape({
     onNameChange: PropTypes.func,
     onAmountBudgetedChanged: PropTypes.func,
-    onAmountSpentChanged: PropTypes.func
+    onAmountSpentChanged: PropTypes.func,
+    onDelete: PropTypes.func
   })
 };
 

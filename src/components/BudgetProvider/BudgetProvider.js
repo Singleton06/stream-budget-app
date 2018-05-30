@@ -16,12 +16,6 @@ class BudgetProvider extends React.Component {
     currentlySelectedBudget: mockData.currentlySelectedBudget
   };
 
-  updateCurrentlySelectedBudget = (uuid) => {
-    this.setState({
-      currentlySelectedBudget: uuid
-    })
-  };
-
   getBudgetsList = () => {
     return this.state.budgets.map(budget => ({
       name: budget.name,
@@ -30,13 +24,26 @@ class BudgetProvider extends React.Component {
     }));
   };
 
-  addNewBudgetLineItem = (budgetName, budgetLineItemName) => {
+  deleteBudgetLineItem = (budgetName, budgetLineItemName) => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
-      const matchingBudget = currentlySelectedBudget.budgetCategories.find(budget => budget.name === budgetName);
+      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budget => budget.name === budgetName);
 
-      matchingBudget.budgetLineItems.push(
+      matchingBudgetCategory.budgetLineItems =  matchingBudgetCategory.budgetLineItems.filter(budgetLineItem => budgetLineItem.name !== budgetLineItemName);
+      return {
+        budgets: copiedBudgets
+      }
+    });
+  };
+
+  addNewBudgetLineItem = (budgetCategoryName, budgetLineItemName) => {
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
+      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budgetCategory => budgetCategory.name === budgetCategoryName);
+
+      matchingBudgetCategory.budgetLineItems.push(
         new BudgetLineItem({
           uuid: uuid(),
           name: budgetLineItemName,
@@ -65,7 +72,7 @@ class BudgetProvider extends React.Component {
         currentlySelectedBudget: newBudget.uuid
       };
     })
-  }
+  };
 
   addNewBudgetCategory = budgetCategoryName => {
     this.setState(previousState => {
@@ -92,6 +99,12 @@ class BudgetProvider extends React.Component {
 
   getCurrentlySelectedBudget = (budgets) => {
     return budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget);
+  };
+
+  updateCurrentlySelectedBudget = (uuid) => {
+    this.setState({
+      currentlySelectedBudget: uuid
+    })
   };
 
   updateBudget = (budgetCategoryName, lineItemName, propertyToUpdate, propertyNewValue) => {
@@ -162,15 +175,16 @@ class BudgetProvider extends React.Component {
     return (
       <BudgetContext.Provider
         value={{
-          updateCurrentlySelectedBudget: this.updateCurrentlySelectedBudget,
           getBudgetsList: this.getBudgetsList,
           getBudgetCategoriesForCurrentBudget: this.getBudgetCategoriesForCurrentBudget,
           getSummary: this.calculateSummaries,
           getSummaryWithTotal: this.calculateSummariesWithTotal,
+          updateCurrentlySelectedBudget: this.updateCurrentlySelectedBudget,
           updateBudget: this.updateBudget,
           addNewBudgetCategory: this.addNewBudgetCategory,
           addNewBudgetLineItem: this.addNewBudgetLineItem,
-          addNewBudget: this.addNewBudget
+          addNewBudget: this.addNewBudget,
+          deleteBudgetLineItem: this.deleteBudgetLineItem
         }}
       >
         {this.props.children}

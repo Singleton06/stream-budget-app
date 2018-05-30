@@ -60,6 +60,7 @@ const generateBudgetItemTableRowEntry = (props, lineItem) => {
       key={lineItem.uuid}
       content={lineItem}
       disableAmountRemaining={true}
+      showDelete={true}
       onChangeCallbacks={{
         onNameChange: createCallbackForLineItemProperty(props.name, lineItem.name, 'name', props.onBudgetUpdate, false),
         onAmountBudgetedChanged: createCallbackForLineItemProperty(
@@ -73,7 +74,8 @@ const generateBudgetItemTableRowEntry = (props, lineItem) => {
           lineItem.name,
           'amountSpent',
           props.onBudgetUpdate
-        )
+        ),
+        onDelete: () => { props.onLineItemDeletion(props.name, lineItem.name)}
       }}
     />
   );
@@ -89,7 +91,7 @@ const BudgetCategoryContainer = props => {
       <ExpansionPanelDetails className={classes.expansionDetails}>
         <Paper className={classes.budgetLineItemContainer}>
           <Table className={classes.table}>
-            <BudgetTableHead names={headings}/>
+            <BudgetTableHead names={headings} showDelete={true}/>
             <TableBody>
               {props.budgetLineItems.map(lineItem => {
                 return generateBudgetItemTableRowEntry(props, lineItem);
@@ -118,7 +120,8 @@ const BudgetCategoryContainer = props => {
 BudgetCategoryContainer.propTypes = {
   name: PropTypes.string.isRequired,
   budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem)),
-  onBudgetUpdate: PropTypes.func
+  onBudgetUpdate: PropTypes.func,
+  onLineItemDeletion: PropTypes.func
 };
 
 export default withStyles(styles)(BudgetCategoryContainer);
