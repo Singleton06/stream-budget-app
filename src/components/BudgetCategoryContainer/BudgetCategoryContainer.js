@@ -20,9 +20,6 @@ const styles = theme => ({
     width: '100%',
     overflowX: 'auto'
   },
-  table: {
-    minWidth: 700
-  },
   button: {
     margin: theme.spacing.unit,
     marginLeft: 0,

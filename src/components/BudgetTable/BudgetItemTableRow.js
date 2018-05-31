@@ -3,23 +3,29 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
+import {withStyles} from '@material-ui/core/styles';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
+const styles = (theme) => ({
+  numericInput: {
+    width: theme.spacing.unit * 20
+  }
+});
 
 const renderDeleteButton = props => {
   return (
     <TableCell padding='none'>
       <IconButton aria-label="Delete" onClick={props.onChangeCallbacks.onDelete}>
-        <RemoveCircle />
+        <RemoveCircle/>
       </IconButton>
     </TableCell>
   );
 };
 
 const BudgetItemTableRow = props => {
+  const {classes} = props;
   return (
     <TableRow>
       {/* TODO: add change listener for the name */}
@@ -38,6 +44,7 @@ const BudgetItemTableRow = props => {
           id="amountBudgeted"
           onChange={props.onChangeCallbacks.onAmountBudgetedChanged}
           margin="normal"
+          className={classes.numericInput}
           fullWidth={true}
           value={props.content.amountBudgeted}
           disabled={props.disableAllInputFields || props.disableAmountBudgeted}
@@ -48,6 +55,7 @@ const BudgetItemTableRow = props => {
           id="amountSpent"
           onChange={props.onChangeCallbacks.onAmountSpentChanged}
           margin="normal"
+          className={classes.numericInput}
           fullWidth={true}
           value={props.content.amountSpent}
           disabled={props.disableAllInputFields || props.disableAmountSpent}
@@ -56,8 +64,10 @@ const BudgetItemTableRow = props => {
       <TableCell numeric padding="dense">
         <TextField
           id="amountRemaining"
-          onChange={() => {}}
+          onChange={() => {
+          }}
           margin="normal"
+          className={classes.numericInput}
           fullWidth={true}
           value={props.content.amountRemaining}
           disabled={props.disableAllInputFields || props.disableAmountRemaining}
@@ -81,10 +91,14 @@ BudgetItemTableRow.defaultProps = {
   disableAmountRemaining: false,
   showDelete: false,
   onChangeCallbacks: {
-    onNameChange: () => {},
-    onAmountBudgetedChanged: () => {},
-    onAmountSpentChanged: () => {},
-    onDelete: () => {}
+    onNameChange: () => {
+    },
+    onAmountBudgetedChanged: () => {
+    },
+    onAmountSpentChanged: () => {
+    },
+    onDelete: () => {
+    }
   }
 };
 
@@ -108,4 +122,4 @@ BudgetItemTableRow.propTypes = {
   })
 };
 
-export default BudgetItemTableRow;
+export default withStyles(styles)(BudgetItemTableRow);
