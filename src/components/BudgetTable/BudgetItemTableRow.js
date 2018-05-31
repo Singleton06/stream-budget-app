@@ -2,25 +2,24 @@ import TextField from '@material-ui/core/TextField';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+import RemoveCircle from '@material-ui/icons/RemoveCircle';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
+
 
 const renderDeleteButton = props => {
   return (
     <TableCell padding='none'>
       <IconButton aria-label="Delete" onClick={props.onChangeCallbacks.onDelete}>
-        <DeleteIcon />
+        <RemoveCircle />
       </IconButton>
     </TableCell>
   );
 };
 
 const BudgetItemTableRow = props => {
-
-
-
   return (
     <TableRow>
       {/* TODO: add change listener for the name */}

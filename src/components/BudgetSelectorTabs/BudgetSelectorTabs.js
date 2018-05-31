@@ -1,7 +1,7 @@
 import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Icon from '@material-ui/core/Icon';
+import AddCircle from '@material-ui/icons/AddCircle';
 
 import {BudgetConsumer} from "../BudgetProvider";
 import {ModalConsumer, AddBudgetModal} from "../Modal";
@@ -16,7 +16,6 @@ const styles = () => ({
 });
 
 const addBudgetKey = 'add_budget';
-const addIcon = <Icon>add_circle</Icon>;
 
 const renderTabs = (budgets, budgetConsumer, modalConsumer, classes) => {
   const onChangeCallback = (event, value) => {
@@ -30,7 +29,7 @@ const renderTabs = (budgets, budgetConsumer, modalConsumer, classes) => {
   return (
     <Tabs value={budgets.find(budget => budget.isCurrentlySelectedBudget).uuid} onChange={onChangeCallback}>
       {budgets.map(budget => <Tab key={budget.uuid} label={budget.name} value={budget.uuid}/>)}
-      <Tab key={addBudgetKey} icon={addIcon} value={addBudgetKey} className={classes.addButton} />
+      <Tab key={addBudgetKey} icon={<AddCircle />} value={addBudgetKey} className={classes.addButton} />
     </Tabs>
   );
 };
