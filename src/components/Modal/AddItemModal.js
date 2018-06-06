@@ -34,7 +34,7 @@ class AddItemModal extends React.Component {
 
   render() {
     return (
-      <Dialog open onClose={this.props.handleClose} aria-labelledby="form-dialog-title" onKeyDown={this.handleKeyPress}>
+      <Dialog open aria-labelledby="form-dialog-title" onKeyDown={this.handleKeyPress}>
         <DialogTitle id="form-dialog-title">{this.props.headerLabel}</DialogTitle>
         <DialogContent>
           <DialogContentText>{this.props.description}</DialogContentText>
