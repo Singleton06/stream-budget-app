@@ -49,7 +49,7 @@ class AddItemModal extends React.Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.onCancel} color="primary">
+          <Button onClick={this.props.onCancel} color="default">
             Cancel
           </Button>
           <Button onClick={this.handleAddButtonClicked} color="primary">

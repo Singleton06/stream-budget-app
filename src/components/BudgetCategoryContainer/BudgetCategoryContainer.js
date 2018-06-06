@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -28,6 +29,9 @@ const styles = theme => ({
   },
   expansionDetails: {
     flexDirection: 'column'
+  },
+  deleteButton: {
+    float: "right"
   }
 });
 
@@ -95,18 +99,21 @@ const BudgetCategoryContainer = props => {
             </TableBody>
           </Table>
         </Paper>
-        <div>
+        <ExpansionPanelActions>
           <ModalConsumer>
             {consumer => {
               return (
-                <Button variant="flat" color="primary" className={classes.button}
+                <Button size="small" variant="flat" color="primary" className={classes.button}
                         onClick={() => consumer.showModal(AddLineItemModal, {budgetName: props.name})}>
                   Add Line Item
                 </Button>
               );
             }}
           </ModalConsumer>
-        </div>
+          <Button size="small" color="secondary" onClick={() => props.onBudgetDelete(props.name)}>
+            Delete
+          </Button>
+        </ExpansionPanelActions>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
@@ -117,7 +124,8 @@ BudgetCategoryContainer.propTypes = {
   name: PropTypes.string.isRequired,
   budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem)),
   onBudgetUpdate: PropTypes.func,
-  onLineItemDeletion: PropTypes.func
+  onLineItemDeletion: PropTypes.func,
+  onBudgetDelete: PropTypes.func
 };
 
 export default withStyles(styles)(BudgetCategoryContainer);

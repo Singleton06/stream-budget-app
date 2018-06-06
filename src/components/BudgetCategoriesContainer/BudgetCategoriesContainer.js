@@ -50,6 +50,7 @@ const BudgetCategoriesContainer = (props) => {
                 budgetLineItems={budget.budgetLineItems}
                 onBudgetUpdate={budgetConsumer.updateBudget}
                 onLineItemDeletion={budgetConsumer.deleteBudgetLineItem}
+                onBudgetDelete={budgetConsumer.deleteBudgetCategory}
               />
             );
           });

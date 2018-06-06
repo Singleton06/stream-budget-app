@@ -24,13 +24,28 @@ class BudgetProvider extends React.Component {
     }));
   };
 
-  deleteBudgetLineItem = (budgetName, budgetLineItemName) => {
+  deleteBudgetLineItem = (budgetCategoryName, budgetLineItemName) => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
-      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budget => budget.name === budgetName);
+      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budget => budget.name === budgetCategoryName);
 
-      matchingBudgetCategory.budgetLineItems =  matchingBudgetCategory.budgetLineItems.filter(budgetLineItem => budgetLineItem.name !== budgetLineItemName);
+      matchingBudgetCategory.budgetLineItems = matchingBudgetCategory.budgetLineItems.filter(budgetLineItem => budgetLineItem.name !== budgetLineItemName);
+      return {
+        budgets: copiedBudgets
+      }
+    });
+  };
+
+  deleteBudgetCategory = (budgetCategoryName) => {
+    console.log('budgetCategoryName', budgetCategoryName);
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
+
+      const indexOfBudgetToRemove = currentlySelectedBudget.budgetCategories.findIndex(budgetCategory => budgetCategory.name === budgetCategoryName);
+      currentlySelectedBudget.budgetCategories.splice(indexOfBudgetToRemove, 1);
+
       return {
         budgets: copiedBudgets
       }
@@ -93,7 +108,7 @@ class BudgetProvider extends React.Component {
   };
 
   copyBudgetsFromState = previousState => {
-    const { budgets } = previousState;
+    const {budgets} = previousState;
     return budgets.map(budget => budget.copy());
   };
 
@@ -129,14 +144,14 @@ class BudgetProvider extends React.Component {
     });
   };
 
-  calculateSummariesWithTotal= () => {
+  calculateSummariesWithTotal = () => {
     const summaries = this.calculateSummaries();
-    const totalSummary  = summaries.reduce((accumulator, currentValue) => {
+    const totalSummary = summaries.reduce((accumulator, currentValue) => {
       return {
         budgeted: currentValue.amountBudgeted + accumulator.budgeted,
         spent: currentValue.amountSpent + accumulator.spent
       }
-    }, {budgeted: 0 , spent: 0});
+    }, {budgeted: 0, spent: 0});
 
     summaries.push(new Summary({
       name: 'Total',
@@ -156,7 +171,7 @@ class BudgetProvider extends React.Component {
             spent: accumulator.spent + currentValue.amountSpent
           };
         },
-        { budgeted: 0, spent: 0 }
+        {budgeted: 0, spent: 0}
       );
 
       return new Summary({
@@ -184,7 +199,8 @@ class BudgetProvider extends React.Component {
           addNewBudgetCategory: this.addNewBudgetCategory,
           addNewBudgetLineItem: this.addNewBudgetLineItem,
           addNewBudget: this.addNewBudget,
-          deleteBudgetLineItem: this.deleteBudgetLineItem
+          deleteBudgetLineItem: this.deleteBudgetLineItem,
+          deleteBudgetCategory: this.deleteBudgetCategory
         }}
       >
         {this.props.children}

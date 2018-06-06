@@ -17,7 +17,7 @@ const styles = (theme) => ({
 const renderDeleteButton = props => {
   return (
     <TableCell padding='none'>
-      <IconButton aria-label="Delete" onClick={props.onChangeCallbacks.onDelete}>
+      <IconButton aria-label="Delete" onClick={props.onChangeCallbacks.onDelete} color="secondary">
         <RemoveCircle/>
       </IconButton>
     </TableCell>
