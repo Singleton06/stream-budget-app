@@ -31,13 +31,14 @@ const renderTabs = (budgets, budgetConsumer, modalConsumer, classes) => {
     budgetConsumer.updateCurrentlySelectedBudget(value);
   };
 
+  const visibleTabs = budgets.filter(budget => budget.isVisible);
   return (
     <Tabs
       value={budgets.find(budget => budget.isCurrentlySelectedBudget).uuid}
       onChange={onChangeCallback}
       indicatorColor="primary"
     >
-      {budgets.map(budget => <Tab key={budget.uuid} label={budget.name} value={budget.uuid} />)}
+      {visibleTabs.map(budget => <Tab key={budget.uuid} label={budget.name} value={budget.uuid} />)}
       <Tab key={addBudgetKey} icon={<AddCircle />} value={addBudgetKey} className={classes.addButton} />
       <Tab key={settingsKey} icon={<Settings />} value={settingsKey} className={classes.addButton} />
     </Tabs>

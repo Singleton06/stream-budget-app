@@ -7,6 +7,7 @@ const budgets = [
   {
     name: 'May 2018',
     uuid: '7d4d9c93-f848-43ac-940d-e01d578443a9',
+    isVisible: true,
     budgetCategories: [
       new BudgetCategory({
         name: 'Food',
@@ -49,6 +50,7 @@ const budgets = [
   new Budget({
     name: 'June 2018',
     uuid: '8bc92bc8-613a-4b4b-b812-140ec6fd7d39',
+    isVisible: false,
     budgetCategories: [
       new BudgetCategory({
         name: 'Food',
@@ -90,8 +92,7 @@ const budgets = [
   })
 ];
 
-
 export default {
   budgets: budgets,
-  currentlySelectedBudget: budgets[1].uuid
+  currentlySelectedBudget: budgets[0].uuid
 };

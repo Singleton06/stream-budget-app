@@ -10,17 +10,20 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Switch from '@material-ui/core/Switch';
 
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteButton from '@material-ui/icons/Delete';
 
 
-const renderBudgetRow = (budget, onBudgetDelete) => {
+const renderBudgetRow = (budget, onBudgetDelete, onBudgetToggle) => {
   return (
-    <TableRow>
+    <TableRow key={budget.uuid}>
       <TableCell>{budget.name}</TableCell>
-      <TableCell/>
+      <TableCell>
+          <Switch checked={budget.isVisible} onChange={(event, checked) => onBudgetToggle(budget.uuid, checked)}/>
+      </TableCell>
       <TableCell>
         <IconButton>
           <DeleteButton onClick={() => onBudgetDelete(budget.uuid)}/>
@@ -30,7 +33,7 @@ const renderBudgetRow = (budget, onBudgetDelete) => {
   )
 };
 
-const renderBudgetsTable = (budgets, onDeleteBudget) => {
+const renderBudgetsTable = (budgets, onDeleteBudget, onBudgetToggle) => {
   return (
     <Table>
       <TableHead>
@@ -42,7 +45,7 @@ const renderBudgetsTable = (budgets, onDeleteBudget) => {
       </TableHead>
       <TableBody>
         {
-          budgets.map((budget) => renderBudgetRow(budget, onDeleteBudget))
+          budgets.map((budget) => renderBudgetRow(budget, onDeleteBudget, onBudgetToggle))
         }
       </TableBody>
     </Table>
@@ -53,7 +56,7 @@ const BudgetListDialog = props => (
   <Dialog open>
     <DialogTitle>Budget List Settings</DialogTitle>
     <DialogContent>
-      { renderBudgetsTable(props.budgets, props.onDeleteBudget) }
+      { renderBudgetsTable(props.budgets, props.onDeleteBudget, props.onBudgetToggle) }
     </DialogContent>
     <DialogActions>
       <Button onClick={() => props.onClose()} color="primary">
@@ -69,7 +72,8 @@ BudgetListDialog.propTypes = {
     name: PropTypes.string,
     uuid: PropTypes.string
   })),
-  onDeleteBudget: PropTypes.func
+  onDeleteBudget: PropTypes.func,
+  onBudgetToggle: PropTypes.func,
 };
 
 export default BudgetListDialog;

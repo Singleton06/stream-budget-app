@@ -13,6 +13,7 @@ const BudgetListModal = () => (
             onClose={modalConsumer.hideModal}
             budgets={budgetConsumer.getBudgetsList()}
             onDeleteBudget={budgetConsumer.deleteBudget}
+            onBudgetToggle={budgetConsumer.toggleVisibilityForBudget}
           />
         )}
       </ModalConsumer>

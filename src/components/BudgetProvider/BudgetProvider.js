@@ -18,8 +18,7 @@ class BudgetProvider extends React.Component {
 
   getBudgetsList = () => {
     return this.state.budgets.map(budget => ({
-      name: budget.name,
-      uuid: budget.uuid,
+      ...budget,
       isCurrentlySelectedBudget: budget.uuid === this.state.currentlySelectedBudget
     }));
   };
@@ -58,10 +57,38 @@ class BudgetProvider extends React.Component {
       const isBudgetToDeleteSelected = copiedBudgets[indexOfBudgetToRemove].uuid === previousState.currentlySelectedBudget;
 
       copiedBudgets.splice(indexOfBudgetToRemove, 1);
+      const currentlySelectedBudget = isBudgetToDeleteSelected ? this.getFirstVisibleTabUUID(copiedBudgets) : previousState.currentlySelectedBudget;
 
       return {
         budgets: copiedBudgets,
-        currentlySelectedBudget: isBudgetToDeleteSelected ? copiedBudgets[0].uuid : previousState.currentlySelectedBudget
+        currentlySelectedBudget
+      }
+    });
+  };
+
+  getFirstVisibleTabUUID = (budgets) => {
+    const firstVisibleBudget = budgets.find(budget => budget.isVisible);
+    if (firstVisibleBudget) {
+      return firstVisibleBudget.uuid;
+    }
+    return null;
+  };
+
+  toggleVisibilityForBudget = (budgetUUID, isVisible) => {
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      const indexOfBudgetToSetVisible = copiedBudgets.findIndex(budget => budget.uuid === budgetUUID);
+      const isBudgetToToggleSelected = copiedBudgets[indexOfBudgetToSetVisible].uuid === previousState.currentlySelectedBudget;
+      copiedBudgets[indexOfBudgetToSetVisible].isVisible = isVisible;
+
+      let currentlySelectedBudget = previousState.currentlySelectedBudget;
+      if (isBudgetToToggleSelected) {
+        currentlySelectedBudget = this.getFirstVisibleTabUUID(copiedBudgets);
+      }
+
+      return {
+        budgets: copiedBudgets,
+        currentlySelectedBudget
       }
     });
   };
@@ -216,6 +243,7 @@ class BudgetProvider extends React.Component {
           deleteBudgetLineItem: this.deleteBudgetLineItem,
           deleteBudgetCategory: this.deleteBudgetCategory,
           deleteBudget: this.deleteBudget,
+          toggleVisibilityForBudget: this.toggleVisibilityForBudget,
         }}
       >
         {this.props.children}
