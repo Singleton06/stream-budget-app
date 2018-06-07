@@ -5,41 +5,71 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteButton from '@material-ui/icons/Delete';
 
+
+const renderBudgetRow = (budget, onBudgetDelete) => {
+  return (
+    <TableRow>
+      <TableCell>{budget.name}</TableCell>
+      <TableCell/>
+      <TableCell>
+        <IconButton>
+          <DeleteButton onClick={() => onBudgetDelete(budget.uuid)}/>
+        </IconButton>
+      </TableCell>
+    </TableRow>
+  )
+};
+
+const renderBudgetsTable = (budgets, onDeleteBudget) => {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Budget Name</TableCell>
+          <TableCell numeric>Visible</TableCell>
+          <TableCell numeric>Actions</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {
+          budgets.map((budget) => renderBudgetRow(budget, onDeleteBudget))
+        }
+      </TableBody>
+    </Table>
+  );
+};
 
 const BudgetListDialog = props => (
   <Dialog open>
     <DialogTitle>Budget List Settings</DialogTitle>
     <DialogContent>
-      <List subheader={<ListSubheader>Settings</ListSubheader>}>
-        {
-          props.budgets.map(budget => <ListItem><ListItemText key={budget.uuid} primary={budget.name}/></ListItem>)
-        }
-      </List>
+      { renderBudgetsTable(props.budgets, props.onDeleteBudget) }
     </DialogContent>
     <DialogActions>
-      <Button onClick={() => props.onCancel()} color="primary">
-        Cancel
-      </Button>
-      <Button onClick={() => {}} color="primary">
-        Ok
+      <Button onClick={() => props.onClose()} color="primary">
+        Close
       </Button>
     </DialogActions>
   </Dialog>
 );
 
 BudgetListDialog.propTypes = {
-  onCancel: PropTypes.func,
+  onClose: PropTypes.func,
   budgets: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     uuid: PropTypes.string
-  }))
+  })),
+  onDeleteBudget: PropTypes.func
 };
 
 export default BudgetListDialog;

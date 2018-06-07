@@ -38,7 +38,6 @@ class BudgetProvider extends React.Component {
   };
 
   deleteBudgetCategory = (budgetCategoryName) => {
-    console.log('budgetCategoryName', budgetCategoryName);
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
@@ -48,6 +47,21 @@ class BudgetProvider extends React.Component {
 
       return {
         budgets: copiedBudgets
+      }
+    });
+  };
+
+  deleteBudget = (budgetUUID) => {
+    this.setState(previousState => {
+      const copiedBudgets = this.copyBudgetsFromState(previousState);
+      const indexOfBudgetToRemove = copiedBudgets.findIndex(budget => budget.uuid === budgetUUID);
+      const isBudgetToDeleteSelected = copiedBudgets[indexOfBudgetToRemove].uuid === previousState.currentlySelectedBudget;
+
+      copiedBudgets.splice(indexOfBudgetToRemove, 1);
+
+      return {
+        budgets: copiedBudgets,
+        currentlySelectedBudget: isBudgetToDeleteSelected ? copiedBudgets[0].uuid : previousState.currentlySelectedBudget
       }
     });
   };
@@ -200,7 +214,8 @@ class BudgetProvider extends React.Component {
           addNewBudgetLineItem: this.addNewBudgetLineItem,
           addNewBudget: this.addNewBudget,
           deleteBudgetLineItem: this.deleteBudgetLineItem,
-          deleteBudgetCategory: this.deleteBudgetCategory
+          deleteBudgetCategory: this.deleteBudgetCategory,
+          deleteBudget: this.deleteBudget,
         }}
       >
         {this.props.children}
