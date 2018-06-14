@@ -17,7 +17,7 @@ const AddLineItemModal = props => (
                 description="Please enter the name of the line item that you would like to add"
                 onCancel={modalConsumer.hideModal}
                 onAdd={(lineItemName) => {
-                  budgetConsumer.addNewBudgetLineItem(props.budgetName, lineItemName);
+                  budgetConsumer.addNewBudgetLineItem(props.budgetCategoryUUID, lineItemName);
                   modalConsumer.hideModal();
                 }}
                 {...props}
@@ -31,7 +31,7 @@ const AddLineItemModal = props => (
 );
 
 AddLineItemModal.propTypes = {
-  budgetName: PropTypes.string.isRequired
+  budgetCategoryUUID: PropTypes.string.isRequired
 };
 
 export default AddLineItemModal;

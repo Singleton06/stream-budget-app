@@ -42,15 +42,16 @@ const BudgetCategoriesContainer = (props) => {
             return <Typography variant="caption">There are currently no budget categories.</Typography>
           }
 
-          return budgetCategories.map(budget => {
+          return budgetCategories.map(budgetCategory => {
             return (
               <BudgetCategoryContainer
-                key={budget.uuid}
-                name={budget.name}
-                budgetLineItems={budget.budgetLineItems}
+                key={budgetCategory.uuid}
+                name={budgetCategory.name}
+                uuid={budgetCategory.uuid}
+                budgetLineItems={budgetCategory.budgetLineItems}
                 onBudgetUpdate={budgetConsumer.updateBudget}
                 onLineItemDeletion={budgetConsumer.deleteBudgetLineItem}
-                onBudgetDelete={budgetConsumer.deleteBudgetCategory}
+                onBudgetCategoryDelete={budgetConsumer.deleteBudgetCategory}
               />
             );
           });

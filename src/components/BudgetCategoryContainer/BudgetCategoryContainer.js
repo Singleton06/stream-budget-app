@@ -62,20 +62,20 @@ const generateBudgetItemTableRowEntry = (props, lineItem) => {
       disableAmountRemaining={true}
       showDelete={true}
       onChangeCallbacks={{
-        onNameChange: createCallbackForLineItemProperty(props.name, lineItem.name, 'name', props.onBudgetUpdate, false),
+        onNameChange: createCallbackForLineItemProperty(props.uuid, lineItem.uuid, 'name', props.onBudgetUpdate, false),
         onAmountBudgetedChanged: createCallbackForLineItemProperty(
-          props.name,
-          lineItem.name,
+          props.uuid,
+          lineItem.uuid,
           'amountBudgeted',
           props.onBudgetUpdate
         ),
         onAmountSpentChanged: createCallbackForLineItemProperty(
-          props.name,
-          lineItem.name,
+          props.uuid,
+          lineItem.uuid,
           'amountSpent',
           props.onBudgetUpdate
         ),
-        onDelete: () => { props.onLineItemDeletion(props.name, lineItem.name)}
+        onDelete: () => { props.onLineItemDeletion(props.uuid, lineItem.uuid)}
       }}
     />
   );
@@ -104,13 +104,13 @@ const BudgetCategoryContainer = props => {
             {consumer => {
               return (
                 <Button size="small" variant="flat" color="primary" className={classes.button}
-                        onClick={() => consumer.showModal(AddLineItemModal, {budgetName: props.name})}>
+                        onClick={() => consumer.showModal(AddLineItemModal, {budgetCategoryUUID: props.uuid})}>
                   Add Line Item
                 </Button>
               );
             }}
           </ModalConsumer>
-          <Button size="small" color="secondary" onClick={() => props.onBudgetDelete(props.name)}>
+          <Button size="small" color="secondary" onClick={() => props.onBudgetCategoryDelete(props.uuid)}>
             Delete
           </Button>
         </ExpansionPanelActions>
@@ -122,10 +122,11 @@ const BudgetCategoryContainer = props => {
 // TODO: add default props
 BudgetCategoryContainer.propTypes = {
   name: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
   budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem)),
   onBudgetUpdate: PropTypes.func,
   onLineItemDeletion: PropTypes.func,
-  onBudgetDelete: PropTypes.func
+  onBudgetCategoryDelete: PropTypes.func
 };
 
 export default withStyles(styles)(BudgetCategoryContainer);
