@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import TableHead from "@material-ui/core/TableHead";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableHead from '@material-ui/core/TableHead';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
-const DELETE_BUTTON_HEADER = "";
+const DELETE_BUTTON_HEADER = '';
 
 const styles = () => ({
   tableHeading: {
-    textAlign: "left"
+    textAlign: 'left'
   }
 });
 

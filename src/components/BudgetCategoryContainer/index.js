@@ -1,3 +1,3 @@
-import BudgetCategoryContainer from "./BudgetCategoryContainer";
+import BudgetCategoryContainer from './BudgetCategoryContainer';
 
 export default BudgetCategoryContainer;

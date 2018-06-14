@@ -1,23 +1,23 @@
-import BudgetCategoryContainer from "../BudgetCategoryContainer";
-import { BudgetConsumer } from "../BudgetProvider";
-import { AddBudgetCategoryModal, ModalConsumer } from "../Modal";
+import BudgetCategoryContainer from '../BudgetCategoryContainer';
+import { BudgetConsumer } from '../BudgetProvider';
+import { AddBudgetCategoryModal, ModalConsumer } from '../Modal';
 
-import React from "react";
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import Button from '@material-ui/core/Button';
 
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-    marginLeft: "1em",
-    float: "left",
-    clear: "left"
+    marginLeft: '1em',
+    float: 'left',
+    clear: 'left'
   }
 });
 
-const renderAddBudgetCategoryButton = (classes, variant = "flat") => {
+const renderAddBudgetCategoryButton = (classes, variant = 'flat') => {
   return (
     <ModalConsumer>
       {modalConsumer => (

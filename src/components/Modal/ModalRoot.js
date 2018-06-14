@@ -1,5 +1,5 @@
-import React from "react";
-import { ModalConsumer } from "./ModalContext";
+import React from 'react';
+import { ModalConsumer } from './ModalContext';
 
 const ModalRoot = () => (
   <ModalConsumer>

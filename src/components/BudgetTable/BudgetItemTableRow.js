@@ -1,12 +1,12 @@
-import TextField from "@material-ui/core/TextField";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
-import RemoveCircle from "@material-ui/icons/RemoveCircle";
-import { withStyles } from "@material-ui/core/styles";
+import TextField from '@material-ui/core/TextField';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import RemoveCircle from '@material-ui/icons/RemoveCircle';
+import { withStyles } from '@material-ui/core/styles';
 
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
   numericInput: {
@@ -79,7 +79,7 @@ const BudgetItemTableRow = props => {
 
 BudgetItemTableRow.defaultProps = {
   content: {
-    name: "",
+    name: '',
     amountBudgeted: 0,
     amountSpent: 0,
     amountRemaining: 0

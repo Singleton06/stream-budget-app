@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import AddItemModal from "./AddItemModal";
-import { ModalConsumer } from "./ModalContext";
-import { BudgetConsumer } from "../BudgetProvider";
+import AddItemModal from './AddItemModal';
+import { ModalConsumer } from './ModalContext';
+import { BudgetConsumer } from '../BudgetProvider';
 
 const AddLineItemModal = props => (
   <BudgetConsumer>

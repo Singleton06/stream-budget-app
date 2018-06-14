@@ -1,3 +1,3 @@
-import BudgetSelectorTabs from "./BudgetSelectorTabs";
+import BudgetSelectorTabs from './BudgetSelectorTabs';
 
 export default BudgetSelectorTabs;

@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
-import Grid from "@material-ui/core/Grid";
-import BudgetAppBar from "./BudgetAppBar";
-import BudgetCategoriesContainer from "./BudgetCategoriesContainer";
-import { BudgetProvider } from "./BudgetProvider";
-import SummaryComponent from "./Summary";
-import BudgetSelectorTabs from "./BudgetSelectorTabs";
+import Grid from '@material-ui/core/Grid';
+import BudgetAppBar from './BudgetAppBar';
+import BudgetCategoriesContainer from './BudgetCategoriesContainer';
+import { BudgetProvider } from './BudgetProvider';
+import SummaryComponent from './Summary';
+import BudgetSelectorTabs from './BudgetSelectorTabs';
 
-import { ModalRoot, ModalConsumer, ModalProvider, ModalGlobalShortcutComponent } from "./Modal";
+import { ModalRoot, ModalConsumer, ModalProvider, ModalGlobalShortcutComponent } from './Modal';
 
-const budgets = ["Food", "Housing", "Charity"];
+const budgets = ['Food', 'Housing', 'Charity'];
 
 const styles = {
   root: {
@@ -28,7 +28,7 @@ class App extends React.Component {
           <ModalProvider>
             <BudgetAppBar title="Budget Application" />
             <BudgetSelectorTabs />
-            <Grid container spacing={0} alignContent={"center"}>
+            <Grid container spacing={0} alignContent={'center'}>
               <Grid sm={6}>
                 <BudgetCategoriesContainer budgets={budgets} />
               </Grid>

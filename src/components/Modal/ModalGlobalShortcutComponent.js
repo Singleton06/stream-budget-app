@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import AddBudgetCategoryModal from "./AddBudgetCategoryModal";
+import AddBudgetCategoryModal from './AddBudgetCategoryModal';
 
 class ModalGlobalShortcutComponent extends React.Component {
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDownEvent);
+    document.removeEventListener('keydown', this.handleKeyDownEvent);
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyDownEvent);
+    document.addEventListener('keydown', this.handleKeyDownEvent);
   }
 
   handleKeyDownEvent = event => {
-    if (event.altKey && event.key === "a") {
+    if (event.altKey && event.key === 'a') {
       this.props.consumer.showModal(AddBudgetCategoryModal);
     }
   };

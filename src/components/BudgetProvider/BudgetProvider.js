@@ -1,11 +1,11 @@
-import React from "react";
-import BudgetLineItem from "../../models/BudgetLineItem";
-import BudgetCategory from "../../models/BudgetCategory";
-import Summary from "../../models/Summary";
-import Budget from "../../models/Budget";
-import uuid from "uuid/v4";
+import React from 'react';
+import BudgetLineItem from '../../models/BudgetLineItem';
+import BudgetCategory from '../../models/BudgetCategory';
+import Summary from '../../models/Summary';
+import Budget from '../../models/Budget';
+import uuid from 'uuid/v4';
 
-import mockData from "./mock-data.js";
+import mockData from './mock-data.js';
 
 const BudgetContext = React.createContext();
 const BudgetConsumer = BudgetContext.Consumer;
@@ -215,7 +215,7 @@ class BudgetProvider extends React.Component {
 
     summaries.push(
       new Summary({
-        name: "Total",
+        name: 'Total',
         amountBudgeted: totalSummary.budgeted,
         amountSpent: totalSummary.spent
       })

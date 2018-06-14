@@ -1,3 +1,3 @@
-import BudgetAppBar from "./BudgetAppBar";
+import BudgetAppBar from './BudgetAppBar';
 
 export default BudgetAppBar;
