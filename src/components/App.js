@@ -16,6 +16,10 @@ const budgets = ['Food', 'Housing', 'Charity'];
 const styles = {
   root: {
     flexGrow: 1
+  },
+  contentContainer: {
+    marginLeft: "10px",
+    marginRight: "10px"
   }
 };
 
@@ -27,15 +31,17 @@ class App extends React.Component {
         <BudgetProvider>
           <ModalProvider>
             <BudgetAppBar title="Budget Application" />
-            <BudgetSelectorTabs />
-            <Grid container spacing={0} alignContent={'center'}>
-              <Grid sm={6}>
-                <BudgetCategoriesContainer budgets={budgets} />
+            <div className={classes.contentContainer}>
+              <BudgetSelectorTabs />
+              <Grid container alignContent={'center'} spacing={16}>
+                <Grid item spacing={8}>
+                  <BudgetCategoriesContainer budgets={budgets} />
+                </Grid>
+                <Grid item spacing={8}>
+                  <SummaryComponent />
+                </Grid>
               </Grid>
-              <Grid sm={6}>
-                <SummaryComponent />
-              </Grid>
-            </Grid>
+            </div>
             <ModalConsumer>{modalConsumer => <ModalGlobalShortcutComponent consumer={modalConsumer} />}</ModalConsumer>
             <ModalRoot />
           </ModalProvider>

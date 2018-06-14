@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddItemModal from './AddItemModal';
+import AddItemDialog from './AddItemDialog';
 import { ModalConsumer } from './ModalContext';
 import { BudgetConsumer } from '../BudgetProvider';
 
@@ -12,7 +12,7 @@ const AddLineItemModal = props => (
         <ModalConsumer>
           {modalConsumer => {
             return (
-              <AddItemModal
+              <AddItemDialog
                 headerLabel="Add Budget Line Item"
                 description="Please enter the name of the line item that you would like to add"
                 onCancel={modalConsumer.hideModal}

@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class AddItemModal extends React.Component {
+class AddItemDialog extends React.Component {
   state = {
     budgetCategoryName: ''
   };
@@ -61,11 +61,11 @@ class AddItemModal extends React.Component {
   }
 }
 
-AddItemModal.propTypes = {
+AddItemDialog.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
   headerLabel: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired
 };
 
-export default AddItemModal;
+export default AddItemDialog;

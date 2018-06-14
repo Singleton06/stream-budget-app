@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 
 import { BudgetTableHead, BudgetItemTableRow } from '../BudgetTable';
 import BudgetLineItem from '../../models/BudgetLineItem';
-import { ModalConsumer, AddLineItemModal } from '../Modal';
+import { ModalConsumer, AddLineItemModal, AreYouSureBudgetLineItemModal } from '../Modal';
 
 const styles = theme => ({
   budgetLineItemContainer: {
@@ -55,31 +55,39 @@ const createCallbackForLineItemProperty = (
   };
 };
 
-const generateBudgetItemTableRowEntry = (props, lineItem) => {
+const createOnChangeCallbacks = (props, lineItem, modalConsumer) => {
+  return {
+    onNameChange: createCallbackForLineItemProperty(props.uuid, lineItem.uuid, 'name', props.onBudgetUpdate, false),
+    onAmountBudgetedChanged: createCallbackForLineItemProperty(
+      props.uuid,
+      lineItem.uuid,
+      'amountBudgeted',
+      props.onBudgetUpdate
+    ),
+    onAmountSpentChanged: createCallbackForLineItemProperty(
+      props.uuid,
+      lineItem.uuid,
+      'amountSpent',
+      props.onBudgetUpdate
+    ),
+    onDelete: () => {
+      modalConsumer.showModal(AreYouSureBudgetLineItemModal, {
+        budgetCategoryUUID: props.uuid,
+        budgetCategoryLineItemUUID: lineItem.uuid,
+        budgetCategoryLineItemName: lineItem.name
+      });
+    }
+  };
+};
+
+const generateBudgetItemTableRowEntry = (props, lineItem, modalConsumer) => {
   return (
     <BudgetItemTableRow
       key={lineItem.uuid}
       content={lineItem}
       disableAmountRemaining={true}
       showDelete={true}
-      onChangeCallbacks={{
-        onNameChange: createCallbackForLineItemProperty(props.uuid, lineItem.uuid, 'name', props.onBudgetUpdate, false),
-        onAmountBudgetedChanged: createCallbackForLineItemProperty(
-          props.uuid,
-          lineItem.uuid,
-          'amountBudgeted',
-          props.onBudgetUpdate
-        ),
-        onAmountSpentChanged: createCallbackForLineItemProperty(
-          props.uuid,
-          lineItem.uuid,
-          'amountSpent',
-          props.onBudgetUpdate
-        ),
-        onDelete: () => {
-          props.onLineItemDeletion(props.uuid, lineItem.uuid);
-        }
-      }}
+      onChangeCallbacks={createOnChangeCallbacks(props, lineItem, modalConsumer)}
     />
   );
 };
@@ -87,47 +95,47 @@ const generateBudgetItemTableRowEntry = (props, lineItem) => {
 const BudgetCategoryContainer = props => {
   const { classes } = props;
   return (
-    <ExpansionPanel>
-      <ExpansionPanelSummary>
-        <Typography>{props.name}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.expansionDetails}>
-        <Paper className={classes.budgetLineItemContainer}>
-          <Table className={classes.table}>
-            <BudgetTableHead names={headings} showDelete={true} />
-            <TableBody>
-              {props.budgetLineItems.map(lineItem => {
-                return generateBudgetItemTableRowEntry(props, lineItem);
-              })}
-            </TableBody>
-          </Table>
-        </Paper>
-        <ExpansionPanelActions>
-          <ModalConsumer>
-            {consumer => {
-              return (
+    <ModalConsumer>
+      {modalConsumer => {
+        return (
+          <ExpansionPanel>
+            <ExpansionPanelSummary>
+              <Typography>{props.name}</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails className={classes.expansionDetails}>
+              <Paper className={classes.budgetLineItemContainer}>
+                <Table className={classes.table}>
+                  <BudgetTableHead names={headings} showDelete={true} />
+                  <TableBody>
+                    {props.budgetLineItems.map(lineItem => {
+                      return generateBudgetItemTableRowEntry(props, lineItem, modalConsumer);
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+              <ExpansionPanelActions>
                 <Button
                   size="small"
                   variant="flat"
                   color="primary"
                   className={classes.button}
                   onClick={() =>
-                    consumer.showModal(AddLineItemModal, {
+                    modalConsumer.showModal(AddLineItemModal, {
                       budgetCategoryUUID: props.uuid
                     })
                   }
                 >
                   Add Line Item
                 </Button>
-              );
-            }}
-          </ModalConsumer>
-          <Button size="small" color="secondary" onClick={() => props.onBudgetCategoryDelete(props.uuid)}>
-            Delete
-          </Button>
-        </ExpansionPanelActions>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+                <Button size="small" color="secondary" onClick={() => props.onBudgetCategoryDelete(props.uuid)}>
+                  Delete
+                </Button>
+              </ExpansionPanelActions>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        );
+      }}
+    </ModalConsumer>
   );
 };
 
@@ -137,7 +145,6 @@ BudgetCategoryContainer.propTypes = {
   uuid: PropTypes.string.isRequired,
   budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem)),
   onBudgetUpdate: PropTypes.func,
-  onLineItemDeletion: PropTypes.func,
   onBudgetCategoryDelete: PropTypes.func
 };
 

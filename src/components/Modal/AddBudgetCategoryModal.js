@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddItemModal from './AddItemModal';
+import AddItemDialog from './AddItemDialog';
 import { ModalConsumer } from './ModalContext';
 import { BudgetConsumer } from '../BudgetProvider';
 
@@ -11,7 +11,7 @@ const AddBudgetCategoryModal = props => (
         <ModalConsumer>
           {modalConsumer => {
             return (
-              <AddItemModal
+              <AddItemDialog
                 headerLabel="Add Budget Category"
                 description="Please enter the title of the budget category that you would like to add"
                 onCancel={modalConsumer.hideModal}

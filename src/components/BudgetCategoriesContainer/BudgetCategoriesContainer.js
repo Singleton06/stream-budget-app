@@ -54,7 +54,6 @@ const BudgetCategoriesContainer = props => {
                 uuid={budgetCategory.uuid}
                 budgetLineItems={budgetCategory.budgetLineItems}
                 onBudgetUpdate={budgetConsumer.updateBudget}
-                onLineItemDeletion={budgetConsumer.deleteBudgetLineItem}
                 onBudgetCategoryDelete={budgetConsumer.deleteBudgetCategory}
               />
             );
