@@ -1,3 +1,3 @@
-import  { BudgetConsumer, BudgetProvider } from './BudgetProvider';
+import { BudgetConsumer, BudgetProvider } from "./BudgetProvider";
 
 export { BudgetConsumer, BudgetProvider };

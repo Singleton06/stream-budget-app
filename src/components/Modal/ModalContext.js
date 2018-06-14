@@ -1,4 +1,4 @@
-import React, { Component, createContext } from 'react';
+import React, { Component, createContext } from "react";
 
 const ModalContext = createContext({
   component: null,
@@ -29,11 +29,7 @@ export class ModalProvider extends Component {
   };
 
   render() {
-    return (
-      <ModalContext.Provider value={this.state}>
-        {this.props.children}
-      </ModalContext.Provider>
-    );
+    return <ModalContext.Provider value={this.state}>{this.props.children}</ModalContext.Provider>;
   }
 }
 

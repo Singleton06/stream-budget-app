@@ -1,50 +1,51 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
-import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpansionPanelActions from "@material-ui/core/ExpansionPanelActions";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 
-import {BudgetTableHead, BudgetItemTableRow} from '../BudgetTable';
-import BudgetLineItem from '../../models/BudgetLineItem';
-import {ModalConsumer, AddLineItemModal} from '../Modal';
+import { BudgetTableHead, BudgetItemTableRow } from "../BudgetTable";
+import BudgetLineItem from "../../models/BudgetLineItem";
+import { ModalConsumer, AddLineItemModal } from "../Modal";
 
 const styles = theme => ({
   budgetLineItemContainer: {
-    width: '100%',
-    overflowX: 'auto'
+    width: "100%",
+    overflowX: "auto"
   },
   button: {
     margin: theme.spacing.unit,
     marginLeft: 0,
-    float: 'left',
-    clear: 'left'
+    float: "left",
+    clear: "left"
   },
   expansionDetails: {
-    flexDirection: 'column'
+    flexDirection: "column"
   },
   deleteButton: {
     float: "right"
   }
 });
 
-const headings = ['Name', 'Amount Budgeted', 'Amount Spent', 'Amount Remaining'];
+const headings = ["Name", "Amount Budgeted", "Amount Spent", "Amount Remaining"];
 
-const createCallbackForLineItemProperty = (budgetName,
-                                           lineItemName,
-                                           propertyToUpdate,
-                                           updateBudgetCallback,
-                                           isNumberValue = true) => {
+const createCallbackForLineItemProperty = (
+  budgetName,
+  lineItemName,
+  propertyToUpdate,
+  updateBudgetCallback,
+  isNumberValue = true
+) => {
   if (!updateBudgetCallback) {
-    return () => {
-    };
+    return () => {};
   }
 
   return newPropertyValue => {
@@ -62,27 +63,29 @@ const generateBudgetItemTableRowEntry = (props, lineItem) => {
       disableAmountRemaining={true}
       showDelete={true}
       onChangeCallbacks={{
-        onNameChange: createCallbackForLineItemProperty(props.uuid, lineItem.uuid, 'name', props.onBudgetUpdate, false),
+        onNameChange: createCallbackForLineItemProperty(props.uuid, lineItem.uuid, "name", props.onBudgetUpdate, false),
         onAmountBudgetedChanged: createCallbackForLineItemProperty(
           props.uuid,
           lineItem.uuid,
-          'amountBudgeted',
+          "amountBudgeted",
           props.onBudgetUpdate
         ),
         onAmountSpentChanged: createCallbackForLineItemProperty(
           props.uuid,
           lineItem.uuid,
-          'amountSpent',
+          "amountSpent",
           props.onBudgetUpdate
         ),
-        onDelete: () => { props.onLineItemDeletion(props.uuid, lineItem.uuid)}
+        onDelete: () => {
+          props.onLineItemDeletion(props.uuid, lineItem.uuid);
+        }
       }}
     />
   );
 };
 
 const BudgetCategoryContainer = props => {
-  const {classes} = props;
+  const { classes } = props;
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary>
@@ -91,7 +94,7 @@ const BudgetCategoryContainer = props => {
       <ExpansionPanelDetails className={classes.expansionDetails}>
         <Paper className={classes.budgetLineItemContainer}>
           <Table className={classes.table}>
-            <BudgetTableHead names={headings} showDelete={true}/>
+            <BudgetTableHead names={headings} showDelete={true} />
             <TableBody>
               {props.budgetLineItems.map(lineItem => {
                 return generateBudgetItemTableRowEntry(props, lineItem);
@@ -103,8 +106,17 @@ const BudgetCategoryContainer = props => {
           <ModalConsumer>
             {consumer => {
               return (
-                <Button size="small" variant="flat" color="primary" className={classes.button}
-                        onClick={() => consumer.showModal(AddLineItemModal, {budgetCategoryUUID: props.uuid})}>
+                <Button
+                  size="small"
+                  variant="flat"
+                  color="primary"
+                  className={classes.button}
+                  onClick={() =>
+                    consumer.showModal(AddLineItemModal, {
+                      budgetCategoryUUID: props.uuid
+                    })
+                  }
+                >
                   Add Line Item
                 </Button>
               );

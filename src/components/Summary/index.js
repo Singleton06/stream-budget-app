@@ -1,2 +1,2 @@
-import SummaryComponent from './SummaryComponent';
+import SummaryComponent from "./SummaryComponent";
 export default SummaryComponent;

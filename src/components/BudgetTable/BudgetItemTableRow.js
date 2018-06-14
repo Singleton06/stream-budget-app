@@ -1,14 +1,14 @@
-import TextField from '@material-ui/core/TextField';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton';
-import RemoveCircle from '@material-ui/icons/RemoveCircle';
-import {withStyles} from '@material-ui/core/styles';
+import TextField from "@material-ui/core/TextField";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import IconButton from "@material-ui/core/IconButton";
+import RemoveCircle from "@material-ui/icons/RemoveCircle";
+import { withStyles } from "@material-ui/core/styles";
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const styles = (theme) => ({
+const styles = theme => ({
   numericInput: {
     width: theme.spacing.unit * 20
   }
@@ -16,16 +16,16 @@ const styles = (theme) => ({
 
 const renderDeleteButton = props => {
   return (
-    <TableCell padding='none'>
+    <TableCell padding="none">
       <IconButton aria-label="Delete" onClick={props.onChangeCallbacks.onDelete} color="secondary">
-        <RemoveCircle/>
+        <RemoveCircle />
       </IconButton>
     </TableCell>
   );
 };
 
 const BudgetItemTableRow = props => {
-  const {classes} = props;
+  const { classes } = props;
   return (
     <TableRow>
       {/* TODO: add change listener for the name */}
@@ -64,8 +64,7 @@ const BudgetItemTableRow = props => {
       <TableCell numeric padding="dense">
         <TextField
           id="amountRemaining"
-          onChange={() => {
-          }}
+          onChange={() => {}}
           margin="normal"
           className={classes.numericInput}
           fullWidth={true}
@@ -80,7 +79,7 @@ const BudgetItemTableRow = props => {
 
 BudgetItemTableRow.defaultProps = {
   content: {
-    name: '',
+    name: "",
     amountBudgeted: 0,
     amountSpent: 0,
     amountRemaining: 0
@@ -91,14 +90,10 @@ BudgetItemTableRow.defaultProps = {
   disableAmountRemaining: false,
   showDelete: false,
   onChangeCallbacks: {
-    onNameChange: () => {
-    },
-    onAmountBudgetedChanged: () => {
-    },
-    onAmountSpentChanged: () => {
-    },
-    onDelete: () => {
-    }
+    onNameChange: () => {},
+    onAmountBudgetedChanged: () => {},
+    onAmountSpentChanged: () => {},
+    onDelete: () => {}
   }
 };
 

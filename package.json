@@ -14,11 +14,14 @@
     "react-scripts": "1.1.4",
     "uuid": "3.2.1"
   },
-  "devDependencies": { },
+  "devDependencies": {
+    "prettier": "^1.13.5"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run format && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier ./src/**/*.js --write"
   }
 }

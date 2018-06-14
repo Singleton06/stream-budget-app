@@ -1,11 +1,11 @@
-import React from 'react';
-import BudgetLineItem from '../../models/BudgetLineItem';
-import BudgetCategory from '../../models/BudgetCategory';
-import Summary from '../../models/Summary';
-import Budget from '../../models/Budget';
-import uuid from 'uuid/v4';
+import React from "react";
+import BudgetLineItem from "../../models/BudgetLineItem";
+import BudgetCategory from "../../models/BudgetCategory";
+import Summary from "../../models/Summary";
+import Budget from "../../models/Budget";
+import uuid from "uuid/v4";
 
-import mockData from './mock-data.js';
+import mockData from "./mock-data.js";
 
 const BudgetContext = React.createContext();
 const BudgetConsumer = BudgetContext.Consumer;
@@ -27,46 +27,55 @@ class BudgetProvider extends React.Component {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
-      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budgetCategory => budgetCategory.uuid === budgetCategoryUUID);
+      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(
+        budgetCategory => budgetCategory.uuid === budgetCategoryUUID
+      );
 
-      matchingBudgetCategory.budgetLineItems = matchingBudgetCategory.budgetLineItems.filter(budgetLineItem => budgetLineItem.uuid !== budgetLineItemUUID);
+      matchingBudgetCategory.budgetLineItems = matchingBudgetCategory.budgetLineItems.filter(
+        budgetLineItem => budgetLineItem.uuid !== budgetLineItemUUID
+      );
       return {
         budgets: copiedBudgets
-      }
+      };
     });
   };
 
-  deleteBudgetCategory = (budgetCategoryUUID) => {
+  deleteBudgetCategory = budgetCategoryUUID => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
 
-      const indexOfBudgetToRemove = currentlySelectedBudget.budgetCategories.findIndex(budgetCategory => budgetCategory.uuid === budgetCategoryUUID);
+      const indexOfBudgetToRemove = currentlySelectedBudget.budgetCategories.findIndex(
+        budgetCategory => budgetCategory.uuid === budgetCategoryUUID
+      );
       currentlySelectedBudget.budgetCategories.splice(indexOfBudgetToRemove, 1);
 
       return {
         budgets: copiedBudgets
-      }
+      };
     });
   };
 
-  deleteBudget = (budgetUUID) => {
+  deleteBudget = budgetUUID => {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const indexOfBudgetToRemove = copiedBudgets.findIndex(budget => budget.uuid === budgetUUID);
-      const isBudgetToDeleteSelected = copiedBudgets[indexOfBudgetToRemove].uuid === previousState.currentlySelectedBudget;
+      const isBudgetToDeleteSelected =
+        copiedBudgets[indexOfBudgetToRemove].uuid === previousState.currentlySelectedBudget;
 
       copiedBudgets.splice(indexOfBudgetToRemove, 1);
-      const currentlySelectedBudget = isBudgetToDeleteSelected ? this.getFirstVisibleTabUUID(copiedBudgets) : previousState.currentlySelectedBudget;
+      const currentlySelectedBudget = isBudgetToDeleteSelected
+        ? this.getFirstVisibleTabUUID(copiedBudgets)
+        : previousState.currentlySelectedBudget;
 
       return {
         budgets: copiedBudgets,
         currentlySelectedBudget
-      }
+      };
     });
   };
 
-  getFirstVisibleTabUUID = (budgets) => {
+  getFirstVisibleTabUUID = budgets => {
     const firstVisibleBudget = budgets.find(budget => budget.isVisible);
     if (firstVisibleBudget) {
       return firstVisibleBudget.uuid;
@@ -78,7 +87,8 @@ class BudgetProvider extends React.Component {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const indexOfBudgetToSetVisible = copiedBudgets.findIndex(budget => budget.uuid === budgetUUID);
-      const isBudgetToToggleSelected = copiedBudgets[indexOfBudgetToSetVisible].uuid === previousState.currentlySelectedBudget;
+      const isBudgetToToggleSelected =
+        copiedBudgets[indexOfBudgetToSetVisible].uuid === previousState.currentlySelectedBudget;
       copiedBudgets[indexOfBudgetToSetVisible].isVisible = isVisible;
 
       let currentlySelectedBudget = previousState.currentlySelectedBudget;
@@ -89,7 +99,7 @@ class BudgetProvider extends React.Component {
       return {
         budgets: copiedBudgets,
         currentlySelectedBudget
-      }
+      };
     });
   };
 
@@ -97,7 +107,9 @@ class BudgetProvider extends React.Component {
     this.setState(previousState => {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
-      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budgetCategory => budgetCategory.uuid === budgetCategoryUUID);
+      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(
+        budgetCategory => budgetCategory.uuid === budgetCategoryUUID
+      );
 
       matchingBudgetCategory.budgetLineItems.push(
         new BudgetLineItem({
@@ -127,7 +139,7 @@ class BudgetProvider extends React.Component {
         budgets: [newBudget, ...copiedBudgets],
         currentlySelectedBudget: newBudget.uuid
       };
-    })
+    });
   };
 
   addNewBudgetCategory = budgetCategoryName => {
@@ -149,18 +161,18 @@ class BudgetProvider extends React.Component {
   };
 
   copyBudgetsFromState = previousState => {
-    const {budgets} = previousState;
+    const { budgets } = previousState;
     return budgets.map(budget => budget.copy());
   };
 
-  getCurrentlySelectedBudget = (budgets) => {
+  getCurrentlySelectedBudget = budgets => {
     return budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget);
   };
 
-  updateCurrentlySelectedBudget = (uuid) => {
+  updateCurrentlySelectedBudget = uuid => {
     this.setState({
       currentlySelectedBudget: uuid
-    })
+    });
   };
 
   updateBudget = (budgetCategoryUUID, budgetLineItemUUID, propertyToUpdate, propertyNewValue) => {
@@ -168,8 +180,12 @@ class BudgetProvider extends React.Component {
       const copiedBudgets = this.copyBudgetsFromState(previousState);
       const currentlySelectedBudget = this.getCurrentlySelectedBudget(copiedBudgets);
 
-      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(budgetCategory => budgetCategory.uuid === budgetCategoryUUID);
-      const budgetLineItem = matchingBudgetCategory.budgetLineItems.find(budgetLineItem => budgetLineItem.uuid === budgetLineItemUUID);
+      const matchingBudgetCategory = currentlySelectedBudget.budgetCategories.find(
+        budgetCategory => budgetCategory.uuid === budgetCategoryUUID
+      );
+      const budgetLineItem = matchingBudgetCategory.budgetLineItems.find(
+        budgetLineItem => budgetLineItem.uuid === budgetLineItemUUID
+      );
 
       const budgetLineItemIndex = matchingBudgetCategory.budgetLineItems.indexOf(budgetLineItem);
 
@@ -187,18 +203,23 @@ class BudgetProvider extends React.Component {
 
   calculateSummariesWithTotal = () => {
     const summaries = this.calculateSummaries();
-    const totalSummary = summaries.reduce((accumulator, currentValue) => {
-      return {
-        budgeted: currentValue.amountBudgeted + accumulator.budgeted,
-        spent: currentValue.amountSpent + accumulator.spent
-      }
-    }, {budgeted: 0, spent: 0});
+    const totalSummary = summaries.reduce(
+      (accumulator, currentValue) => {
+        return {
+          budgeted: currentValue.amountBudgeted + accumulator.budgeted,
+          spent: currentValue.amountSpent + accumulator.spent
+        };
+      },
+      { budgeted: 0, spent: 0 }
+    );
 
-    summaries.push(new Summary({
-      name: 'Total',
-      amountBudgeted: totalSummary.budgeted,
-      amountSpent: totalSummary.spent
-    }));
+    summaries.push(
+      new Summary({
+        name: "Total",
+        amountBudgeted: totalSummary.budgeted,
+        amountSpent: totalSummary.spent
+      })
+    );
     return summaries;
   };
 
@@ -212,7 +233,7 @@ class BudgetProvider extends React.Component {
             spent: accumulator.spent + currentValue.amountSpent
           };
         },
-        {budgeted: 0, spent: 0}
+        { budgeted: 0, spent: 0 }
       );
 
       return new Summary({
@@ -243,7 +264,7 @@ class BudgetProvider extends React.Component {
           deleteBudgetLineItem: this.deleteBudgetLineItem,
           deleteBudgetCategory: this.deleteBudgetCategory,
           deleteBudget: this.deleteBudget,
-          toggleVisibilityForBudget: this.toggleVisibilityForBudget,
+          toggleVisibilityForBudget: this.toggleVisibilityForBudget
         }}
       >
         {this.props.children}
@@ -252,7 +273,4 @@ class BudgetProvider extends React.Component {
   }
 }
 
-export {
-  BudgetProvider,
-  BudgetConsumer
-};
+export { BudgetProvider, BudgetConsumer };

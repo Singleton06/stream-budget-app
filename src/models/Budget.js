@@ -23,7 +23,7 @@ class Budget {
    * @param {boolean} [true] isVisible
    *    Whether or not the budget is visible in the general view.
    */
-  constructor({name, uuid, budgetCategories, isVisible=true}) {
+  constructor({ name, uuid, budgetCategories, isVisible = true }) {
     this.name = name;
     this.uuid = uuid;
     this.budgetCategories = budgetCategories;
@@ -35,7 +35,7 @@ class Budget {
       name: this.name,
       uuid: this.uuid,
       budgetCategories: this.budgetCategories.map(category => category.copy()),
-      isVisible: this.isVisible,
+      isVisible: this.isVisible
     });
   }
 }

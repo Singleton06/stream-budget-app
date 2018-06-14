@@ -1,13 +1,13 @@
-import React from 'react';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AddCircle from '@material-ui/icons/AddCircle';
-import Settings from '@material-ui/icons/Settings';
+import React from "react";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import AddCircle from "@material-ui/icons/AddCircle";
+import Settings from "@material-ui/icons/Settings";
 
-import {BudgetConsumer} from "../BudgetProvider";
-import {AddBudgetModal, BudgetListModal, ModalConsumer} from "../Modal";
+import { BudgetConsumer } from "../BudgetProvider";
+import { AddBudgetModal, BudgetListModal, ModalConsumer } from "../Modal";
 
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = () => ({
   addButton: {
@@ -16,8 +16,8 @@ const styles = () => ({
   }
 });
 
-const addBudgetKey = 'add_budget';
-const settingsKey = 'budget_settings';
+const addBudgetKey = "add_budget";
+const settingsKey = "budget_settings";
 
 const renderTabs = (budgets, budgetConsumer, modalConsumer, classes) => {
   const onChangeCallback = (event, value) => {
@@ -45,8 +45,8 @@ const renderTabs = (budgets, budgetConsumer, modalConsumer, classes) => {
   );
 };
 
-const BudgetSelectorTabs = (props) => {
-  const {classes} = props;
+const BudgetSelectorTabs = props => {
+  const { classes } = props;
   return (
     <BudgetConsumer>
       {budgetConsumer => (

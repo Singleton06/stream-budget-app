@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import AddItemModal from './AddItemModal';
-import {ModalConsumer} from './ModalContext';
-import {BudgetConsumer} from '../BudgetProvider';
+import AddItemModal from "./AddItemModal";
+import { ModalConsumer } from "./ModalContext";
+import { BudgetConsumer } from "../BudgetProvider";
 
 const AddLineItemModal = props => (
   <BudgetConsumer>
@@ -16,7 +16,7 @@ const AddLineItemModal = props => (
                 headerLabel="Add Budget Line Item"
                 description="Please enter the name of the line item that you would like to add"
                 onCancel={modalConsumer.hideModal}
-                onAdd={(lineItemName) => {
+                onAdd={lineItemName => {
                   budgetConsumer.addNewBudgetLineItem(props.budgetCategoryUUID, lineItemName);
                   modalConsumer.hideModal();
                 }}
