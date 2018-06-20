@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddItemDialog from './AddItemDialog';
-import { ModalConsumer } from './ModalContext';
-import { BudgetConsumer } from '../BudgetProvider';
+import { ModalConsumer } from '../ModalContext';
+import { BudgetConsumer } from '../../BudgetProvider/index';
 
 const AddLineItemModal = props => (
   <BudgetConsumer>

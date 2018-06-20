@@ -92,7 +92,7 @@ class BudgetProvider extends React.Component {
       copiedBudgets[indexOfBudgetToSetVisible].isVisible = isVisible;
 
       let currentlySelectedBudget = previousState.currentlySelectedBudget;
-      if (isBudgetToToggleSelected) {
+      if (isBudgetToToggleSelected || copiedBudgets.filter(budget => budget.isVisible).length === 1) {
         currentlySelectedBudget = this.getFirstVisibleTabUUID(copiedBudgets);
       }
 
@@ -245,7 +245,11 @@ class BudgetProvider extends React.Component {
   };
 
   getBudgetCategoriesForCurrentBudget = () => {
-    return this.state.budgets.find(budget => budget.uuid === this.state.currentlySelectedBudget).budgetCategories;
+    const currentlySelectedBudget = this.state.budgets.find(
+      budget => budget.uuid === this.state.currentlySelectedBudget
+    );
+
+    return currentlySelectedBudget ? currentlySelectedBudget.budgetCategories : [];
   };
 
   render() {

@@ -14,7 +14,12 @@ import Button from '@material-ui/core/Button';
 
 import { BudgetTableHead, BudgetItemTableRow } from '../BudgetTable';
 import BudgetLineItem from '../../models/BudgetLineItem';
-import { ModalConsumer, AddLineItemModal, AreYouSureBudgetLineItemModal } from '../Modal';
+import {
+  ModalConsumer,
+  AddLineItemModal,
+  AreYouSureBudgetLineItemModal,
+  AreYouSureBudgetCategoryModal
+} from '../Modal';
 
 const styles = theme => ({
   budgetLineItemContainer: {
@@ -92,6 +97,14 @@ const generateBudgetItemTableRowEntry = (props, lineItem, modalConsumer) => {
   );
 };
 
+const generateOnBudgetCategoryDeleteButton = (modalConsumer, props) => {
+  return () =>
+    modalConsumer.showModal(AreYouSureBudgetCategoryModal, {
+      budgetCategoryUUID: props.uuid,
+      budgetCategoryName: props.name
+    });
+};
+
 const BudgetCategoryContainer = props => {
   const { classes } = props;
   return (
@@ -127,7 +140,11 @@ const BudgetCategoryContainer = props => {
                 >
                   Add Line Item
                 </Button>
-                <Button size="small" color="secondary" onClick={() => props.onBudgetCategoryDelete(props.uuid)}>
+                <Button
+                  size="small"
+                  color="secondary"
+                  onClick={generateOnBudgetCategoryDeleteButton(modalConsumer, props)}
+                >
                   Delete
                 </Button>
               </ExpansionPanelActions>

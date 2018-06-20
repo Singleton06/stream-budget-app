@@ -1,8 +1,8 @@
 import React from 'react';
 
 import BudgetListDialog from './BudgetListDialog';
-import { ModalConsumer } from '../Modal';
-import { BudgetConsumer } from '../BudgetProvider';
+import { ModalConsumer } from '../index';
+import { BudgetConsumer } from '../../BudgetProvider/index';
 
 const BudgetListModal = () => (
   <BudgetConsumer>

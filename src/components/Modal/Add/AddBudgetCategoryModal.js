@@ -1,8 +1,8 @@
 import React from 'react';
 
 import AddItemDialog from './AddItemDialog';
-import { ModalConsumer } from './ModalContext';
-import { BudgetConsumer } from '../BudgetProvider';
+import { ModalConsumer } from '../ModalContext';
+import { BudgetConsumer } from '../../BudgetProvider/index';
 
 const AddBudgetCategoryModal = props => (
   <BudgetConsumer>

@@ -18,8 +18,8 @@ const styles = {
     flexGrow: 1
   },
   contentContainer: {
-    marginLeft: "10px",
-    marginRight: "10px"
+    marginLeft: '10px',
+    marginRight: '10px'
   }
 };
 

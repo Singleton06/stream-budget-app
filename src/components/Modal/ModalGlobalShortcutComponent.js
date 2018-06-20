@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddBudgetCategoryModal from './AddBudgetCategoryModal';
+import AddBudgetCategoryModal from './Add/AddBudgetCategoryModal';
 
 class ModalGlobalShortcutComponent extends React.Component {
   componentWillUnmount() {
