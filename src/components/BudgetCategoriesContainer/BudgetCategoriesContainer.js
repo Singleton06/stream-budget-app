@@ -43,10 +43,23 @@ const BudgetCategoriesContainer = props => {
           const budgetCategories = budgetConsumer.getBudgetCategoriesForCurrentBudget();
 
           if (budgetCategories.length === 0) {
-            return <Typography variant="caption">There are currently no budget categories.</Typography>;
+            const areThereAnyVisibleBudgets =
+              budgetConsumer.getBudgetsList().filter(budget => budget.isVisible).length > 0;
+            if (areThereAnyVisibleBudgets) {
+              return (
+                <React.Fragment>
+                  <Typography variant="caption">
+                    There are currently no budget categories. Please add one by clicking the button below.
+                  </Typography>
+                  {renderAddBudgetCategoryButton(classes)}
+                </React.Fragment>
+              );
+            } else {
+              return <Typography variant="caption">There are currently no budgets. Please add one above.</Typography>;
+            }
           }
 
-          return budgetCategories.map(budgetCategory => {
+          const budgetCategoryElements = budgetCategories.map(budgetCategory => {
             return (
               <BudgetCategoryContainer
                 key={budgetCategory.uuid}
@@ -58,9 +71,15 @@ const BudgetCategoriesContainer = props => {
               />
             );
           });
+
+          return (
+            <React.Fragment>
+              {budgetCategoryElements}
+              {renderAddBudgetCategoryButton(classes)}
+            </React.Fragment>
+          );
         }}
       </BudgetConsumer>
-      {renderAddBudgetCategoryButton(classes)}
     </React.Fragment>
   );
 };

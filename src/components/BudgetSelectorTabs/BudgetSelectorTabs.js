@@ -33,7 +33,7 @@ const renderTabs = (budgets, budgetConsumer, modalConsumer, classes) => {
 
   const visibleTabs = budgets.filter(budget => budget.isVisible);
   const currentlySelectedBudget = budgets.find(budget => budget.isCurrentlySelectedBudget);
-  const currentlySelectedBudgetUUID = currentlySelectedBudget ? currentlySelectedBudget.uuid : undefined;
+  const currentlySelectedBudgetUUID = currentlySelectedBudget ? currentlySelectedBudget.uuid : null;
   return (
     <Tabs value={currentlySelectedBudgetUUID} onChange={onChangeCallback} indicatorColor="primary">
       {visibleTabs.map(budget => <Tab key={budget.uuid} label={budget.name} value={budget.uuid} />)}

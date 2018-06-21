@@ -156,13 +156,18 @@ const BudgetCategoryContainer = props => {
   );
 };
 
-// TODO: add default props
+BudgetCategoryContainer.defaultProps = {
+  named: '',
+  uuid: '',
+  budgetLineItems: [],
+  onBudgetUpdate: () => {}
+};
+
 BudgetCategoryContainer.propTypes = {
   name: PropTypes.string.isRequired,
   uuid: PropTypes.string.isRequired,
   budgetLineItems: PropTypes.arrayOf(PropTypes.instanceOf(BudgetLineItem)),
-  onBudgetUpdate: PropTypes.func,
-  onBudgetCategoryDelete: PropTypes.func
+  onBudgetUpdate: PropTypes.func
 };
 
 export default withStyles(styles)(BudgetCategoryContainer);

@@ -17,6 +17,8 @@ class BudgetProvider extends React.Component {
   };
 
   getBudgetsList = () => {
+    console.log('budgets:', this.state.budgets);
+
     return this.state.budgets.map(budget => ({
       ...budget,
       isCurrentlySelectedBudget: budget.uuid === this.state.currentlySelectedBudget

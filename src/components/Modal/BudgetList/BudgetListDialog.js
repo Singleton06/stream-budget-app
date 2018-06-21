@@ -14,17 +14,16 @@ import Switch from '@material-ui/core/Switch';
 
 import Button from '@material-ui/core/Button';
 
-
 class BudgetListDialog extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       confirmDeleteUUID: undefined
-    }
+    };
   }
 
-  handleDeleteClicked = (budget) => {
+  handleDeleteClicked = budget => {
     if (this.state.confirmDeleteUUID === budget.uuid) {
       this.props.onDeleteBudget(budget.uuid);
     } else {
@@ -34,24 +33,31 @@ class BudgetListDialog extends Component {
     }
   };
 
-  handleOnMouseLeave = (budget) => {
+  handleOnMouseLeave = budget => {
     if (this.state.confirmDeleteUUID === budget.uuid) {
       this.setState({
         confirmDeleteUUID: undefined
-      })
+      });
     }
   };
 
-  renderBudgetRow = (budget) => {
+  renderBudgetRow = budget => {
     return (
       <TableRow key={budget.uuid}>
         <TableCell>{budget.name}</TableCell>
         <TableCell>
-          <Switch checked={budget.isVisible} onChange={(event, checked) => this.props.onBudgetToggle(budget.uuid, checked)} />
+          <Switch
+            checked={budget.isVisible}
+            onChange={(event, checked) => this.props.onBudgetToggle(budget.uuid, checked)}
+          />
         </TableCell>
         <TableCell>
-          <Button onClick={() => this.handleDeleteClicked(budget)} onMouseLeave={() => this.handleOnMouseLeave(budget)} color="secondary">
-            { this.state.confirmDeleteUUID === budget.uuid ? "Click again to confirm" : "Delete" }
+          <Button
+            onClick={() => this.handleDeleteClicked(budget)}
+            onMouseLeave={() => this.handleOnMouseLeave(budget)}
+            color="secondary"
+          >
+            {this.state.confirmDeleteUUID === budget.uuid ? 'Click again to confirm' : 'Delete'}
           </Button>
         </TableCell>
       </TableRow>

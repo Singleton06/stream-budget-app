@@ -34,10 +34,10 @@ class App extends React.Component {
             <div className={classes.contentContainer}>
               <BudgetSelectorTabs />
               <Grid container alignContent={'center'} spacing={16}>
-                <Grid item spacing={8}>
+                <Grid item xs={6}>
                   <BudgetCategoriesContainer budgets={budgets} />
                 </Grid>
-                <Grid item spacing={8}>
+                <Grid item xs={6}>
                   <SummaryComponent />
                 </Grid>
               </Grid>
