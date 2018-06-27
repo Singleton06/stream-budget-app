@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BudgetAppBar default props 1`] = `
+<header
+  className="MuiPaper-root-12 MuiPaper-elevation4-18 MuiAppBar-root-4 MuiAppBar-positionStatic-8 MuiAppBar-colorPrimary-10 BudgetAppBar-flexGrow-1"
+>
+  <div
+    className="MuiToolbar-root-39 MuiToolbar-gutters-40"
+  >
+    <h2
+      className="MuiTypography-root-41 MuiTypography-title-47 MuiTypography-colorInherit-60 BudgetAppBar-title-3"
+    >
+      
+    </h2>
+  </div>
+</header>
+`;
+
+exports[`BudgetAppBar title prop specified 1`] = `
+<header
+  className="MuiPaper-root-12 MuiPaper-elevation4-18 MuiAppBar-root-4 MuiAppBar-positionStatic-8 MuiAppBar-colorPrimary-10 BudgetAppBar-flexGrow-1"
+>
+  <div
+    className="MuiToolbar-root-39 MuiToolbar-gutters-40"
+  >
+    <h2
+      className="MuiTypography-root-41 MuiTypography-title-47 MuiTypography-colorInherit-60 BudgetAppBar-title-3"
+    >
+      testing
+    </h2>
+  </div>
+</header>
+`;
